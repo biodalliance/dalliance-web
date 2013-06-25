@@ -11,7 +11,7 @@
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
-        padding-top: 80px;
+        padding-top: 60px;
         padding-bottom: 40px;
       }
     </style>
@@ -19,36 +19,72 @@
 
     <script language="javascript" src="http://www.biodalliance.org/canvas/dalliance-compiled.js"></script>
     <script language="javascript">
-      new Browser({
-          chr:          '22',
-      viewStart:    30000000,
+
+  var b = new Browser({
+    chr:          '22',
+    viewStart:    30000000,
     viewEnd:      30030000,
-    cookieKey:    'human-embed-fp',
+    cookieKey:    'human2',
+
+    chains: {
+      hg19ToHg18: new Chainset('http://www.derkholm.net:8080/das/hg19ToHg18/', 'GRCh37', 'NCBI36',
+                               {
+                                  speciesName: 'Human',
+                                  taxon: 9606,
+                                  auth: 'GRCh',
+                                  version: 37
+                               })
+    },
 
     sources:     [{name:                 'Genome',      
-                   desc:                 'Human reference genome build NCBI36',
-                   uri:                  'http://www.derkholm.net:8080/das/hg18comp/',        
-                   tier_type:            'sequence',
-                   provides_entrypoints: true},
+                   twoBitURI:            'http://www.biodalliance.org/datasets/hg18.2bit',
+                   // uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
+                   tier_type:            'sequence'},
                   {name:                 'Genes',     
                    desc:                 'Gene structures from Ensembl 54',
                    uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
                    collapseSuperGroups:  true,
                    provides_karyotype:   true,
-                   provides_search:      true},
-                  {name:                 'MeDIP-seq',
-                   desc:                 'MeDIP-seq reads from Nature Biotech. 26:779-785',
-                   uri:                  'http://www.derkholm.net:8080/das/medipseq_reads'}],
+                   provides_search:      true,
+                   provides_entrypoints: true,
+                   maxbins:              false}, 
+                  {name:                 'Repeats',     
+                   uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
+                   stylesheet_uri:       'http://www.biodalliance.org/stylesheets/repeats-L1.xml'}, 
+                  {name:                 'CpG Density', 
+                   uri:                  'http://www.derkholm.net:8080/das/hg18comp/',        
+                   // stylesheet_uri:       'http://www.biodalliance.org/stylesheets/cpg-hist.xml',
+                   style:                [{type: 'cpgoe',
+                                           style: {glyph: 'LINEPLOT',
+                                                   FGCOLOR: 'green', HEIGHT: '50'}}]},
+                    {name: 'MeDIP-raw',
+                     desc: 'MeDIP-seq reads from Nature Biotech. 26:779-785',
+                     uri: 'http://www.derkholm.net:8080/das/medipseq_reads/'},
+                  {name:                 'BWG test',
+                   bwgURI:               'http://www.biodalliance.org/datasets/spermMethylation.bw',
+                   stylesheet_uri:       'http://www.ebi.ac.uk/das-srv/genomicdas/das/batman_seq_SP/stylesheet'},
+                  {name:                 'BBD test',
+                   bwgURI:               'http://www.biodalliance.org/datasets/ensGene.bb',
+                   link:                 'http://ncbi36.ensembl.org/Homo_sapiens/Gene/Summary?t=$$',
+                   collapseSuperGroups:  true,
+                   disable: true},
+                  {name:                 'Style test',
+                   uri:                  './glyph-test/',
+                   features_uri:         './glyph-test/features.xml',
+                   stylesheet_uri:       './glyph-test/stylesheet.xml'}
+                ],
+
+    setDocumentTitle: true,
 
     searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_54_36p/'),
     browserLinks: {
         Ensembl: 'http://ncbi36.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
         UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=chr${chr}:${start}-${end}',
-    },
-
-    disablePoweredBy: true,
-    noTitle: true
+        Sequence: 'http://www.derkholm.net:8080/das/hg18comp/sequence?segment=${chr}:${start},${end}'
+    }
   });
+
+
 	  </script>
 
     <!-- Fav and touch icons -->
@@ -65,13 +101,12 @@
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="index.html">Biodalliance</a>
+          <a class="brand" href="index.html" style="margin-left: 20px">Biodalliance</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="index.html">Get started</a></li>
@@ -89,41 +124,10 @@
               </li>
             </ul>
           </div><!--/.nav-collapse -->
-        </div>
       </div>
     </div>
 
-    <a href="https://github.com/dasmoth/dalliance"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-
-    <div class="container">
-
-      <div class="hero-unit" style='padding: 35px'>
-	<h3 style='margin-top: 0px'>The genome, wherever you want it</h3>
-        <div id="svgHolder" style="background: white; padding: 5px; margin-top: 20px"></div>
-      </div>
-
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span6">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="span6">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
-
-      </div>
-
-      <hr>
-
-      <footer>
-        <p>Last update 25th June 2012</p>
-      </footer>
-
-    </div> <!-- /container -->
+      <div id='svgHolder'>Dalliance goes here...</div>
 
     <!-- Le javascript
     ================================================== -->

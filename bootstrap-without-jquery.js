@@ -107,7 +107,7 @@
         dropdown = dropdowns[i];
         dropdown.setAttribute('tabindex', '0'); // Fix to make onblur work in Chrome
         dropdown.onclick = doDropdown;
-        dropdown.onblur = closeDropdown;
+        // dropdown.onblur = closeDropdown;
     }
 
     // Set event listeners for alert boxes

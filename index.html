@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -63,35 +65,7 @@
 
   <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="index.html">Biodalliance</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li><a href="index.html">Get started</a></li>
-              <li><a href="#about">Add data</a></li>
-              <li><a href="#contact">About</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Genomes <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Human (GRCh37)</a></li>
-                  <li><a href="#">Human (NCBI36)</a></li>
-                  <li><a href="#">Mouse (GRCm37)</a></li>
-                  <li><a href="#">Zebrafish</a></li>
-                  <li><a href="#">C. elegans (WS220)</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+    {% include topbar.html %}
 
     <a href="https://github.com/dasmoth/dalliance"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
@@ -120,7 +94,7 @@
       <hr>
 
       <footer>
-        <p>Last update 25th June 2012</p>
+        <p>Last update {{ site.time | date_to_long_string }}</p>
       </footer>
 
     </div> <!-- /container -->

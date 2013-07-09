@@ -1,0 +1,50 @@
+---
+layout: genome
+---
+    <script language="javascript" src="http://www.biodalliance.org/canvas/dalliance-compiled.js"></script>
+    <script language="javascript">
+
+
+ new Browser({
+      chr:        'I',
+      viewStart:  3000000,
+      viewEnd:    3030000,
+      cookieKey:  'worm_ws220',
+
+      coordSystem: {
+          speciesName: 'Caenorhabditis elegans',
+          taxon: 6239,
+          auth: 'WS',
+          version: 210 
+      },
+
+      sources:      [{name: 'Genome',
+                     uri:  'http://www.derkholm.net:8080/das/cel_61_200/',
+                     desc: 'Worm reference genome build WS220',
+                     tier_type: 'sequence',
+                     provides_entrypoints: true},
+                    {name: 'Genes',
+                     desc: 'Gene structures from Wormbase WS220',
+                     uri:  'http://www.derkholm.net:8080/das/cel_61_220/',
+                     collapseSuperGroups: true,
+                     provides_karyotype: true,
+                     provides_search: true},
+                    {name: 'Repeats',
+                     desc: 'Repeat annotation from Wormbase + Ensembl',
+                     uri: 'http://www.derkholm.net:8080/das/cel_61_220/',
+                     stylesheet_uri: 'http://www.derkholm.net/dalliance-test/stylesheets/mouse-repeats.xml'}],
+
+ 
+    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/cel_61_220/'),
+    karyoEndpoint: new DASSource('http://www.derkholm.net:8080/das/cel_61_220/'),
+ 
+    browserLinks: {
+        Ensembl: 'http://www.ensembl.org/Caenorhabditis_elegans/Location/View?r=${chr}:${start}-${end}'
+    }
+});
+
+	  </script>
+
+
+
+      <div id='svgHolder'>Dalliance goes here...</div>

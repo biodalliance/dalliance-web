@@ -1,0 +1,63 @@
+---
+layout: genome
+---
+    <script language="javascript" src="http://www.biodalliance.org/canvas/dalliance-compiled.js"></script>
+    <script language="javascript">
+
+  new Browser({
+    chr:                 '22',
+    viewStart:           30000000,
+    viewEnd:             30030000,
+    cookieKey:           'human-grc_h37',
+
+    coordSystem: {
+      speciesName: 'Human',
+      taxon: 9606,
+      auth: 'GRCh',
+      version: '37'
+    },
+
+    chains: {
+      hg18ToHg19: new Chainset('http://www.derkholm.net:8080/das/hg18ToHg19/', 'NCBI36', 'GRCh37',
+                               {
+                                  speciesName: 'Human',
+                                  taxon: 9606,
+                                  auth: 'NCBI',
+                                  version: 36
+                               })
+    },
+
+    sources:          [{name: 'Genome',
+                        uri:  'http://www.derkholm.net:8080/das/hg19comp/',
+                        desc: 'Human reference genome build GRCh37',
+                        tier_type: 'sequence',
+                        provides_entrypoints: true},
+                       {name: 'Genes',
+                        desc: 'Gene structures from Ensembl 59 (GENCODE 4)',
+                        uri: 'http://www.derkholm.net:8080/das/hsa_59_37d/',
+                        collapseSuperGroups: true,
+                        provides_karyotype: true,     
+                        provides_search: true},
+                       {name: 'Repeats',
+                        desc: 'Repeat annotation from Ensembl 59', 
+                        uri: 'http://www.derkholm.net:8080/das/hsa_59_37d/',
+                        stylesheet_uri: 'http://www.derkholm.net/dalliance-test/stylesheets/ens-repeats.xml'},
+                       {name: 'CpG',
+                        desc: 'CpG observed/expected ratio',
+                        uri: 'http://www.derkholm.net:8080/das/hg19comp/',
+                        stylesheet_uri: 'http://www.derkholm.net/dalliance-test/stylesheets/cpg.xml'}],
+
+    browserLinks: {
+      Ensembl: 'http://www.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
+      UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=chr${chr}:${start}-${end}',
+      Sequence: 'http://www.derkholm.net:8080/das/hg19comp/sequence?segment=${chr}:${start},${end}'
+    },
+
+    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_59_37d/'),
+    karyotypeEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_59_37d/')
+  });
+	  </script>
+
+
+
+      <div id='svgHolder'>Dalliance goes here...</div>

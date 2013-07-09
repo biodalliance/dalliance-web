@@ -1,0 +1,76 @@
+---
+layout: page
+title: Adding data
+---
+Dalliance is designed to make it easy to add your own data, or data
+from public collections.  There are currently two different approaches
+for adding data: DAS is rich and flexible, but requires you to run
+your own server.  Binary formats are less flexible, but easy to set up.
+We expect to support more file-based formats, including VCF and GFF,
+in the near future.
+
+<h2>Adding data via DAS</h2>
+
+<p>Dalliance is a <a href='http://biodas.org/'>Distributed Annotation System (DAS)</a> client, so you can add arbitrary data by running your own DAS server.  DAS is still the richest and most flexible way to add data, although other approaches (see below) may be easier and perform better for large datasets.</p>
+
+<p>
+There are a number of tools to help you run a DAS server. Perl users will probably prefer <a href='http://www.sanger.ac.uk/resources/software/proserver/'>Proserver</a> while Java-ish people might like <a href='http://www.biojava.org/wiki/Dazzle'>Dazzle</a></p>
+
+<p>Once your server is set up, you can either add the track directly using the Add track -&gt; Custom option, or you can add it to the <a href='http://www.dasregistry.org/'>DAS Registry</a>, in which case it should show up in the track browser directly.</p>
+
+<p>
+Dalliance includes a full implementation implementation of the DAS/1.53 and DAS/1.6 stylesheet systems, and this is the preferred way for controlling how your data appears.
+<p>
+
+<h2>Adding indexed binary files</h2>
+
+    <p>Dalliance can integrate data from certain types of indexed binary file directly, without any software support beyond that provided by normal web servers like <a href='http://httpd.apache.org/'>Apache HTTPD</a>. Indexed binary data can also be viewed directly from disk, with no server requirements whatsoever. This is potentially the easiest way to add your own data to Dalliance. It may also have performance advantages over traditional DAS, especially when you have larger numbers of features or a slow network connection.</P.
+
+<p>Because these formats have a relatively compact index data structure associated with the primary data, Dalliance can access the index and only fetch the required data, even though data covering the whole genome is combined into a single file. The great majority of modern web server software can return arbitrary portions of a requested resource (using the <code>Range</code> header to specify the desired portion).</p>
+
+<h2 id='preparing_binary_data'>Preparing binary data</h2>
+
+<p>
+Currently-supported formats are:
+</p>
+<ul>
+<li>bigBed (make from a BED file using bedToBigBed)</li>
+<li>bigWig (make from a WIG fiel using wigToBigWig)</li>
+<li>BAM (can be produced from most sequence alignment formats using, e.g., samtools</li>
+<li>.2bit (only for reference genomes)</li>
+</ul>
+
+<h2 id='configuring_your_server'>Configuring your server</h2>
+
+<p>(You can skip this if you are only interested in accessing local files).</p>
+
+<p>In principle, you can just drop a binary file on a web server and access it from Dalliance. However, unless you are able to host the file on the same server as the Dalliance code itself, fetching the data requires <a href='/cors.html'>cross origin requests</a>, and a little server reconfiguration may be required if such requests are to succeed. Assuming you&#8217;re using the common <a href='http://httpd.apache.org/'>Apache HTTPD</a> web server, the following configuration should do the trick:</p>
+
+<pre><code>    Header set Access-Control-Allow-Origin &quot;*&quot;
+    Header set Access-Control-Allow-Headers &quot;Range&quot;</code></pre>
+
+<p>The first line is the standard header for enabling cross-origin requests. The second is slightly more subtle: by default, cross-origin requests are restricted to simple HTTP requests without custom headers. The extra CORS header means that Dalliance can initiate requests which use the <code>Range</code> header in order to fetch just a small portion of the data.</p>
+
+<p>The simplest place to put these lines would be in a <code>.htaccess</code> file in the same directory as the binary content you with to view with Dalliance. If you are lucky, this will work even if you just have a personal directory on a web server operated by somebody else. However, some web servers have been configured to ignore <code>.htaccess</code> files, and even those that do may not be configured to allow custom headers. If this doesn&#8217;t work, you have two options:</p>
+
+<ol>
+<li>
+<p>Ask the server administrator to enable <code>.htaccess</code> files and ensure that custom headers can be configured (briefly, this requires that <code>mod_header</code> be loaded, and that &#8221;<code>AllowOveride FileInfo</code>&#8221; be configured).</p>
+</li>
+
+<li>
+<p>Place the &#8221;<code>Header set</code>&#8221; directives in the global configuration file instead. They can be placed inside a <code>Directory</code> section if you do not wish them to affect the whole server.</p>
+</li>
+</ol>
+
+<h2 id='adding_binary_data_tracks'>Using binary data tracks</h2>
+
+<p>Adding binary data to Dalliance is a very similar process to adding custom DAS data. Click the &#8220;Add track&#8221; button and then select the &#8220;Binary&#8221; tab.</p>
+
+<p><img src='ss/addbin1.png' alt='' /></p>
+
+<p>Enter the URL where your data is hosted, or select a file, then click &#8220;Add&#8221;.</p>
+
+<p><img src='ss/addbin2.png' alt='' /></p>
+
+<p>Check the track name and coordinate system, click &#8220;Add&#8221; again, and you&#8217;re done.</p>

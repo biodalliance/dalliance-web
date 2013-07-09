@@ -8,7 +8,7 @@ layout: genome
     chr:          '22',
     viewStart:    30000000,
     viewEnd:      30030000,
-    cookieKey:    'human2',
+    cookieKey:    'ndw-human-ncbi36',
 
     chains: {
       hg19ToHg18: new Chainset('http://www.derkholm.net:8080/das/hg19ToHg18/', 'GRCh37', 'NCBI36',
@@ -22,7 +22,6 @@ layout: genome
 
     sources:     [{name:                 'Genome',      
                    twoBitURI:            'http://www.biodalliance.org/datasets/hg18.2bit',
-                   // uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
                    tier_type:            'sequence'},
                   {name:                 'Genes',     
                    desc:                 'Gene structures from Ensembl 54',
@@ -51,11 +50,7 @@ layout: genome
                    bwgURI:               'http://www.biodalliance.org/datasets/ensGene.bb',
                    link:                 'http://ncbi36.ensembl.org/Homo_sapiens/Gene/Summary?t=$$',
                    collapseSuperGroups:  true,
-                   disable: true},
-                  {name:                 'Style test',
-                   uri:                  './glyph-test/',
-                   features_uri:         './glyph-test/features.xml',
-                   stylesheet_uri:       './glyph-test/stylesheet.xml'}
+                   disable: true}
                 ],
 
     setDocumentTitle: true,

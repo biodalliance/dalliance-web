@@ -1,0 +1,61 @@
+---
+layout: genome
+---
+    <script language="javascript" src="http://www.biodalliance.org/canvas/dalliance-compiled.js"></script>
+    <script language="javascript">
+
+  new Browser({
+      chr:        '1',
+      viewStart:  30000000,
+      viewEnd:    30030000,
+      cookieKey:  'danio-zv9',
+
+      coordSystem: {
+          speciesName: 'Danio rerio',
+          taxon: 7955,
+          auth: 'Zv',
+          version: 9
+      },
+/*
+    chains: {
+      mm8ToMm9: new Chainset('http://www.derkholm.net:8080/das/mm8ToMm9/', 'NCBIM36', 'NCBIM37',
+                               {
+                                  speciesName: 'Mouse',
+                                  taxon: 10090,
+                                  auth: 'NCBIM',
+                                  version: 36
+                               })
+    }, */
+
+
+      sources:      [{name: 'Genome',
+                     uri:  'http://www.derkholm.net:9080/das/danRer7comp/',
+                     desc: 'Zebrafish reference genome build Zv9', 
+                     tier_type: 'sequence',
+                     provides_entrypoints: true},
+                    {name: 'Genes',
+                     desc: 'Gene structures from Ensembl 61',
+                     uri:  'http://www.derkholm.net:8080/das/dre_61_9a/',
+                     collapseSuperGroups: true,
+                     provides_karyotype: true,
+                     provides_search: true},
+                    {name: 'Repeats',
+                     desc: 'Repeat annotation from Ensembl 61',
+                     uri:  'http://www.derkholm.net:8080/das/dre_61_9a/',
+                     stylesheet_uri: 'http://www.derkholm.net/dalliance-test/stylesheets/ens-repeats.xml'}],
+
+ 
+    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/dre_61_9a/'),
+    karyoEndpoint: new DASSource('http://www.derkholm.net:8080/das/dre_61_9a/'),
+ 
+    browserLinks: {
+        Ensembl: 'http://www.ensembl.org/Danio_rerio/Location/View?r=${chr}:${start}-${end}',
+        UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=danRer7&position=chr${chr}:${start}-${end}'
+    }
+});
+
+	  </script>
+
+
+
+      <div id='svgHolder'>Dalliance goes here...</div>

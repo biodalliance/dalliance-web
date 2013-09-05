@@ -5,7 +5,17 @@ title: Adding plugins to Dalliance
 <h3>Feature info plugins</h3>
 
 Feature Info plugins are run whenever the default feature-info box gets displayed (usually when the user clicks on a feature,
-unless this behaviour has been over-ridden).  They are able to 
+unless this behaviour has been over-ridden).  They are able to add extra rows to the feature-info box.  A minimal example is:
+
+{% highlight javascript %}
+browser.addFeatureInfoPlugin(function(f, info) {
+    info.add('Testing', 'This is a test!');
+});
+{% endhighlight %}
+
+You can add either strings (as above) or DOM elements.  If you want to add information which isn't yet available (e.g.
+because you need to perform an AJAX request or other asynchronous operation to get hold of it), the simplest thing to
+do is to add an empty <code>div</code> element then populate it once the data arrives
 
 <h3>Feature listeners</h3>
 

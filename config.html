@@ -5,6 +5,24 @@ title: Configuring Dalliance
 
 There are many options you can configure when creating a Browser object.
 
+<h5>chr/viewStart/viewEnd</h5>
+
+These options configure the default view when the browser starts for the first time.
+
+{%highlight javascript %}
+    chr:          '22',
+    viewStart:    30000000,
+    viewEnd:      30030000
+{%endhighlight%}
+
+<h5>maxViewWidth</h5>
+
+The maximum width of the visible region, configured in bases.  Default is 500000.
+
+<h5>pageName</h5>
+
+<h5>cookieKey</h5>
+
 <h5>coordSystem</h5>
 
 This defines the reference genome coordinate system for the browser.  It's principally used when
@@ -16,23 +34,140 @@ coordSystem: {
     speciesName: 'Danio rerio',
     taxon: 7955,
     auth: 'Zv',
-    version: 9
+    version: 9,
+    ucscName: 'danRer7'
 }
 {%endhighlight%}
 
 The <code>speciesName</code> field can be a human-readable label, and isn't used when querying the
 registry.  <code>taxon</code> should be an integer identified from the <a href='http://www.ncbi.nlm.nih.gov/taxonomy'>NCBI Taxonomy</a>
 <code>auth</code> and <code>version</code> should, as far as possible, match authority and version strings used
-in the <a href='http://dasregistry.org/'>DAS Registry</a>
+in the <a href='http://dasregistry.org/'>DAS Registry</a>.
 
-<h3>General options when configuring a track</h3>
+The <code>ucscName</code> field is optional, but should be filled in with the UCSC genome browser name of the assembly
+if it is defined.  This enables <a href='#hub'>track-hub support</a> to work properly.
 
-<h3>Configuring a DAS track</h3>
+<h5>setDocumentTitle</h5>
 
-<h3>Configuring a bigwig or bigbed track</h3>
+If true, attempt to change the title of the web browser window to reflect the species name being displayed.  Generally not
+wanted for embedded browsers.
 
-<h3>Configuring a bigwig or bigbed track</h3>
+<h5>uiPrefix</h5>
+
+<h3>General options when configuring a tier</h3>
+
+<h5>name (required)</h5>
+
+The name of the track, as shown in the tier-identification tab.
+
+<h5>desc</h5>
+
+A longer description of the content, shown when clicking on the tier-identification tab.  Currently only
+plain text supported -- should probably allow a subset of HTML as well (TBD).
+
+<h5>stylesheet_uri</h5>
+
+URI of a <a href='http://www.biodas.org/documents/spec-1.6.html#stylesheet'>DAS Stylesheet</a>
+to use when displaying this data.  For DAS sources, this overrides the source's default stylesheet.
+For other sources, this allows richer style configuration.
+
+<h5>mapping</h5>
+
+Remap the data for this source using a mapping specified in the global <code>chains</code> configuration.
+
+<h5>collapseSuperGroups</h5>
+
+Hint to allow more "gene-like" rendering for some data sources.  Will probably be deprecated once
+we find a better way of determining which sources provide gene annotations.
+
+<h5>featureInfoPlugin</h5>
+
+Configure a <a href='plugins.html'>feature-info plugin</a> which just applies to this tier.  <i>e.g.</i>:
+
+{%highlight javascript%}
+{name:                'BBD test',
+ bwgURI:              'http://www.biodalliance.org/datasets/ensGene.bb',
+ collapseSuperGroups: true
+ featureInfoPlugin:   function(f, info) {
+                          info.add('Testing', 'This is a test');
+                      };
+}
+{%endhighlight%}
+
+
+<h3>Configuring a DAS source</h3>
+
+<h5>uri (required)</h5>
+
+Base URI for the DAS server.  Used to construct URIs for requesting features, sequence, and
+(if not over-ridden) stylesheets.  <i>e.g.</i>
+
+{%highlight javascript%}
+
+{name:                 'MeDIP raw',
+ uri:                  'http://www.derkholm.net:8080/das/medipseq_reads'}
+{%endhighlight%}
+
+<h5>tier_type</h5>
+
+Setting this to the string <code>'sequence'</code> indicates that this should be a DAS sequence
+tier rather than a DAS features tier.
+
+<h5>maxBins</h5>
+
+
+
+<h3>Configuring a bigwig or bigbed source</h3>
+
+BigWig and BigBed files are configured in the same manner -- Dalliance automatically distinguished between
+the two when loading.  big* sources are recognized by the presence of a <code>bwgURI</code> option in
+their configuration.
+
+<h5>bwgURI (required)</h5>
+
+The URI for the big* file.  Despite the name, this can be used with both BigWig and BigBed files.
+
+<h5>forceReduction</h5>
+
+Takes an integer parameter.  Forces one of the 'reduced' forms of the data to be used.  0=first reduction, 1=second reduction, etc.
+Alternatively, a value less than zero can be used to ensure that reduced data is <strong>never</strong> used.
+
+<h5>quantLeapThreshold (currently bigwig only)</h5>
+
+Enables leap-by-threshold functionality.  Takes a numerical parameter which is the default threshold.
+
+<h3>Configuring a BAM source</h3>
+
+Dalliance can directly view BAM files so long as they're sorted and indexed.  BAM source configurations are recognized by
+the presence of a bamURI option.
+
+<h5>bamURI (required)</h5>
+
+URI of a BAM file to access.  <i>e.g.</i>
+
+{%highlight javascript%}
+{name: "MyBAMTrack",
+ bamURI: "http://server/myfile.sort.bam"}
+{%endhighlight%}
+
+<h5>baiURI</h5>
+
+Explicitly specify the URI for the BAM index (.bam.bai) file.  If not specified, Dalliance tries appending '.bai' to the value
+of the <code>bamURI</code> parameter.
 
 <h3>Configuring an Ensembl-REST track</h3>
 
-<h3>Configuring a track-hub</h3>
+<h3><a id='hub'>Configuring a track-hub</a></h3>
+
+As of Dalliance 0.9, there is rudimentary support for <a href='http://genome.ucsc.edu/goldenPath/help/hgTrackHubHelp.html'>UCSC-style
+track hubs</a>, so long as they're server over HTTP and support CORS.  These can be configured with:
+
+{%highlight javascript%}
+hubs: ['http://www.biodalliance.org/datasets/testhub/hub.txt', 
+       'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt']
+{%endhighlight%}
+
+...and will appear as extra tabs in the track-addition user interface.
+
+Options for automatically activating some tracks from a track hub, and a user interface
+for manually connecting to a trackhub, should appear in the next release.

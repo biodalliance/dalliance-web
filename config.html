@@ -1,0 +1,38 @@
+---
+layout: page
+title: Configuring Dalliance
+---
+
+There are many options you can configure when creating a Browser object.
+
+<h5>coordSystem</h5>
+
+This defines the reference genome coordinate system for the browser.  It's principally used when
+querying the DAS registry to find relevant datasources.  It is also needed to correctly re-map data
+between coordinate systems.  A typical configuration looks like:
+
+{%highlight javascript %}
+coordSystem: {
+    speciesName: 'Danio rerio',
+    taxon: 7955,
+    auth: 'Zv',
+    version: 9
+}
+{%endhighlight%}
+
+The <code>speciesName</code> field can be a human-readable label, and isn't used when querying the
+registry.  <code>taxon</code> should be an integer identified from the <a href='http://www.ncbi.nlm.nih.gov/taxonomy'>NCBI Taxonomy</a>
+<code>auth</code> and <code>version</code> should, as far as possible, match authority and version strings used
+in the <a href='http://dasregistry.org/'>DAS Registry</a>
+
+<h3>General options when configuring a track</h3>
+
+<h3>Configuring a DAS track</h3>
+
+<h3>Configuring a bigwig or bigbed track</h3>
+
+<h3>Configuring a bigwig or bigbed track</h3>
+
+<h3>Configuring an Ensembl-REST track</h3>
+
+<h3>Configuring a track-hub</h3>

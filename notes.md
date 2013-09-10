@@ -3,7 +3,7 @@ layout: page
 title: Release notes
 ---
 
-Version 0.9.0 (XXth September 2013)
+Version 0.9.0 (10th September 2013)
 -------------
 
  * Many user-interface cleanups and improvements.

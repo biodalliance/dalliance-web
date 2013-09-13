@@ -1,0 +1,89 @@
+---
+layout: page
+title: Stylesheets for Dalliance
+---
+
+Dalliance aims to implement the full <a href='http://www.biodas.org/documents/spec-1.6.html#stylesheet'>DAS
+Stylesheet</a> language, including all <a href='http://www.biodas.org/documents/spec-1.6.html#glyphid'>glyph
+types</a>.
+
+<p>
+There are also a number of extensions:
+</p>
+
+<h5>Label matching (since 0.7)</h5>
+
+Features can be filtered by label if you add a label attribute to the <code>TYPE</code> element.
+
+<h5>Regexp matching (since 0.7)</h5>
+
+The id, method, and label fields of the <code>TYPE</code> element can take regular expression
+arguments as well as exact matches, e.g.:
+
+{% highlight xml %}
+<TYPE id="repeat" label="L1.+">
+  <GLYPH>
+    <BOX>
+      <HEIGHT>10</HEIGHT>
+      <BGCOLOR>red</BGCOLOR>
+    </BOX>
+  </GLYPH>
+</TYPE>
+<TYPE id="repeat">
+  <GLYPH zoom="low">
+    <BOX>
+      <HEIGHT>10</HEIGHT>
+      <BGCOLOR>orange</BGCOLOR>
+    </BOX>
+  </GLYPH>
+</TYPE>
+{%endhighlight%}
+
+<h5>POINTS glyph (since 0.9)</h5>
+
+The <code>POINTS</code> glyph type can be used to draw scatter plots.  It will probably be
+deprecated in Dalliance 0.10 in favour of the more general <code>SCATTER</code> attribute, and
+may be removed in the future.
+
+<h5>SIZE (since 0.10)</h5>
+
+This can be applied to small glyphs to specify the size.  If not specified, size is equal to the height.
+Mostly useful in conjuction with the <code>SCATTER</code> attribute.
+
+<h5>SCATTER (since 0.10)</h5>
+
+This attribute can be applied to all the "small" glyph types (DOT, EX, STAR, etc.) to convert them
+into points on a scatter plot.  When this attribute is set to "yes", the y position of the glyph is adjusted
+according to the feature's score, and the <code>MIN</code>, <code>MAX</code> and <code>HEIGHT</code> attributes
+are interpreted as for line-plots and histograms.
+
+{% highlight xml %}
+<TYPE id='default'>
+  <GLYPH>
+    <STAR>
+      <SCATTER>yes</SCATTER>
+      <POINTS>8</POINTS>
+      <SIZE>6</SIZE>
+      <FGCOLOR>blue</FGCOLOR>
+      <MIN>0</MIN>
+      <MAX>100</MAX>
+      <HEIGHT>50</HEIGHT>
+    </STAR>
+  </GLYPH>
+</TYPE>
+{% endhighlight %}
+      
+
+<h5>SQUARE glyph (since 0.10)</h5>
+
+Rendered the same as <code>BOX</code> but the width is independent of the size of the underlying feature.
+Usable in scatter plots.
+
+<h5>STAR glyph (since 0.10)</h5>
+
+A star.  Number of points can be configured using the <code>POINTS</code> attribute (default is 5).  Usable
+in scatter plots.
+
+<h5>JSON-encoded stylesheets (since 0.8)</h5>
+
+...

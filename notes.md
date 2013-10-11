@@ -3,6 +3,18 @@ layout: page
 title: Release notes
 ---
 
+Version 0.10.0 (XX October 2013)
+-------------
+
+ * User-interface elements which were previously presented as large
+   pop-up elements (e.g. the track selector) have now been moved to a sidebar
+ * Many clean-ups to the track-selector, and a new matrix view for use
+   with track-hubs.
+ * Completed support for the track-hub metadata model.
+ * Added a user-interface for manually connecting to a track-hub.
+ * Progress indicators on tracks which are actively loading data.
+ * [Improved support for scatter-plot tracks](/stylesheets.html#scatter).
+
 Version 0.9.0 (10th September 2013)
 -------------
 

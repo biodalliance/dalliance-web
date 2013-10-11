@@ -54,6 +54,11 @@ wanted for embedded browsers.
 
 <h5>uiPrefix</h5>
 
+URL from which static browser UI resources should be downloaded (CSS, images, and help
+pages).  By default, this
+is <code>http://www.biodalliance.org/release-X.Y</code> code where X.Y represents the
+current major and minor release numbers.
+
 <h3>General options when configuring a tier</h3>
 
 <h5>name (required)</h5>
@@ -116,7 +121,8 @@ tier rather than a DAS features tier.
 
 <h5>maxBins</h5>
 
-
+Enables/disables the <code>maxbins</code> DAS extension for server-side downsampling
+of quantitative data.  Default is <code>true</code>.
 
 <h3>Configuring a bigwig or bigbed source</h3>
 

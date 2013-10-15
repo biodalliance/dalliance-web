@@ -3,7 +3,7 @@ layout: page
 title: Release notes
 ---
 
-Version 0.10.0 (XX October 2013)
+Version 0.10.0 (15th October 2013)
 -------------
 
  * User-interface elements which were previously presented as large

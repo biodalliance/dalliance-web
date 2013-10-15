@@ -3,7 +3,7 @@ layout: genome
 ---
     <script language="javascript">
 
-  new Browser({
+  var b = new Browser({
     chr:                 '22',
     viewStart:           30000000,
     viewEnd:             30030000,
@@ -13,7 +13,8 @@ layout: genome
       speciesName: 'Human',
       taxon: 9606,
       auth: 'GRCh',
-      version: '37'
+      version: '37',
+      ucscName: 'hg19'
     },
 
     chains: {
@@ -51,6 +52,8 @@ layout: genome
       UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=chr${chr}:${start}-${end}',
       Sequence: 'http://www.derkholm.net:8080/das/hg19comp/sequence?segment=${chr}:${start},${end}'
     },
+
+    hubs: ['http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt'],
 
     searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_59_37d/'),
     karyotypeEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_59_37d/')

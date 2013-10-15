@@ -164,7 +164,42 @@ of the <code>bamURI</code> parameter.
 
 <h3><a id='jbrowse-rest'>Configuring a JBrowse-REST track</a></h3>
 
+{%highlight javascript%}
+{name: 'JBTest',
+ jbURI: 'http://my.server.com/jbrowse/rest',
+ jbQuery: 'type=IntergenicRegion'}
+{%endhighlight%}
+
 <h3><a id='ensembl-rest'>Configuring an Ensembl-REST track</a></h3>
+
+Since Dalliance 0.9, data can be fetched from the <a href='http://beta.rest.ensembl.org/'>Ensembl-REST API</a>.
+
+<h5>tier_type: ensembl</h5>
+
+Required for Ensembl-REST source configurations
+
+<h5>uri</h5>
+
+Base URI for the server.  Unusually, this is <b>not</b> required for Ensembl-REST
+sources, and defaults to <code>http://beta.rest.ensembl.org</code>.
+
+<h5>species (currently required)</h5>
+
+A species name as recognized by the Ensembl-REST API.  Future versions may
+try to work this out automatically from the browser's <code>coordSystem</code>
+parameter.
+
+<h5>type</h5>
+
+An array of feature types to fetch.
+
+{%highlight javascript%}
+{name:                 'e! transcripts',
+ uri:                  'http://beta.rest.ensembl.org',
+ tier_type:            'ensembl',
+ species:              'human',
+ type:                 ['transcript', 'exon', 'cds']}
+{%endhighlight%}
 
 <h3><a id='hub'>Configuring a track-hub</a></h3>
 
@@ -177,6 +212,3 @@ hubs: ['http://www.biodalliance.org/datasets/testhub/hub.txt',
 {%endhighlight%}
 
 ...and will appear as extra tabs in the track-addition user interface.
-
-Options for automatically activating some tracks from a track hub, and a user interface
-for manually connecting to a trackhub, should appear in the next release.

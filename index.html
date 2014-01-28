@@ -20,37 +20,77 @@
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 
     <script language="javascript" src="{{site.uiprefix}}/dalliance-compiled.js"></script>
+
     <script language="javascript">
-      new Browser({
-          chr:          '22',
-      viewStart:    30000000,
-    viewEnd:      30030000,
-    cookieKey:    'human-embed-fp',
+      var b = new Browser({
+        chr:          '22',
+        viewStart:    29890000,
+        viewEnd:      30050000,
+        cookieKey:    'human-grc_h37-fp',
 
-    sources:     [{name:                 'Genome',      
-                   desc:                 'Human reference genome build NCBI36',
-                   uri:                  'http://www.derkholm.net:8080/das/hg18comp/',        
-                   tier_type:            'sequence',
-                   provides_entrypoints: true},
-                  {name:                 'Genes',     
-                   desc:                 'Gene structures from Ensembl 54',
-                   uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
-                   collapseSuperGroups:  true,
-                   provides_karyotype:   true,
-                   provides_search:      true},
-                  {name:                 'MeDIP-seq',
-                   desc:                 'MeDIP-seq reads from Nature Biotech. 26:779-785',
-                   uri:                  'http://www.derkholm.net:8080/das/medipseq_reads'}],
+        coordSystem: {
+          speciesName: 'Human',
+          taxon: 9606,
+          auth: 'GRCh',
+          version: '37',
+          ucscName: 'hg19',
+        },
 
-    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_54_36p/'),
-    browserLinks: {
-        Ensembl: 'http://ncbi36.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
-        UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=chr${chr}:${start}-${end}',
-    },
+        chains: {
+          hg18ToHg19: new Chainset('http://www.derkholm.net:8080/das/hg18ToHg19/', 'NCBI36', 'GRCh37',
+                                   {
+                                      speciesName: 'Human',
+                                      taxon: 9606,
+                                      auth: 'GRCh',
+                                      version: 36
+                                   })
+        },
 
-    disablePoweredBy: true,
-    noTitle: true
-  });
+        sources:     [{name:                 'Genome',
+                       twoBitURI:            'http://www.biodalliance.org/datasets/hg19.2bit',
+                       tier_type: 'sequence'},
+                      {name: 'Genes',
+                       desc: 'Gene structures from GENCODE 19',
+                       bwgURI: 'http://www.biodalliance.org/datasets/gencode.bb',
+                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode.xml',
+                       collapseSuperGroups: true,
+                       trixURI: 'http://www.biodalliance.org/datasets/geneIndex.ix'},
+
+                       {name: 'GM12878 UW', desc: 'GM12878 DNaseI signals from UW', 
+                        pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg', 
+                        bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/signal/jan2011/bigwig/wgEncodeUwDnaseGm12878Aln_2Reps.norm5.rawsignal.bw', 
+                        style: [{type: 'default', style: {glyph: 'HISTOGRAM', BGCOLOR: 'rgb(8,104,172)', HEIGHT: 30, id: 'style1'}}], 
+                        noDownsample: true},
+                      {name: 'GM12878 H3K4me1', desc: 'GM12878 H3K4me1 signal from Broad',
+                       pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg',
+                       bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/signal/jan2011/bigwig/wgEncodeBroadHistoneGm12878H3k4me1StdAln_2Reps.norm5.rawsignal.bw',
+                       style: [{type: 'default', style: {glyph: 'HISTOGRAM', BGCOLOR: 'rgb(166,71,71)', HEIGHT: 30, id: 'style1'}}], 
+                       noDownsample: true}, 
+                      {name: 'GM12878 H3K4me2', desc: 'GM12878 H3K4me2 signal from Broad', 
+                       pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg', 
+                       bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/signal/jan2011/bigwig/wgEncodeBroadHistoneGm12878H3k4me2StdAln_2Reps.norm5.rawsignal.bw', 
+                       style: [{type: 'default', style: {glyph: 'HISTOGRAM', BGCOLOR: 'rgb(166,71,71)', HEIGHT: 30, id: 'style1'}}], 
+                       noDownsample: true}, 
+                      {name: 'GM12878 H3K4me3', desc: 'GM12878 H3K4me3 signal from UW', 
+                       pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg',
+                       bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/signal/jan2011/bigwig/wgEncodeUwHistoneGm12878H3k4me3StdAln_2Reps.norm5.rawsignal.bw',
+                       style: [{type: 'default', style: {glyph: 'HISTOGRAM', BGCOLOR: 'rgb(166,71,71)', HEIGHT: 30, id: 'style1'}}], 
+                       noDownsample: true}, 
+                      {name: 'GM12878 ChromHMM', desc: 'GM12878 ChromHMM Genome Segmentation', 
+                       pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg',
+                       bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/segmentations/jan2011/hub/gm12878.ChromHMM.bb',
+                       style: [{type: 'bigwig', style: {glyph: 'BOX', FGCOLOR: 'black', BGCOLOR: 'blue', HEIGHT: 8, BUMP: false, LABEL: false, ZINDEX: 20, BGITEM: true, id: 'style1'}}, 
+                              {type: 'bb-translation', style: {glyph: 'BOX', FGCOLOR: 'black', BGITEM: true, BGCOLOR: 'red', HEIGHT: 10, BUMP: true, ZINDEX: 20, id: 'style2'}}, 
+                              {type: 'bb-transcript', style: {glyph: 'BOX', FGCOLOR: 'black', BGCOLOR: 'white', HEIGHT: 10, ZINDEX: 10, BUMP: true, LABEL: true, id: 'style3'}}]}
+                    ],
+
+        setDocumentTitle: false,
+        disablePoweredBy: true,
+        noTitle: true,
+
+        hubs: ['http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt']
+      });
+      
 	  </script>
 
     <!-- Fav and touch icons -->
@@ -72,7 +112,7 @@
     <div class="container">
 
       <div class="hero-unit" style='padding: 35px'>
-	<h3 style='margin-top: 0px'>The genome, wherever you want it</h3>
+	<h3 style='margin-top: 0px'>Fast, embeddable genome visualization</h3>
         <div id="svgHolder" style="background: white; padding: 5px; margin-top: 20px"></div>
       </div>
 

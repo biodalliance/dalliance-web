@@ -3,6 +3,18 @@ layout: page
 title: Release notes
 ---
 
+Version 0.11.0 (XX February 2014)
+-------------
+
+ * New track configuration tool.
+ * Buttons for jumping to next feature.
+ * Improved support for password-protected tracks and track-hubs.
+ * Support for VCF files (with Tabix indices).
+ * Support for indexed bigbeds and Trix indices.
+ * Much improved support for read-level display of data from BAM files.
+ * Support for high-DPI (e.g. Retina) displays.
+ * Numberous bug-fixes and performance improvements.
+
 Version 0.10.0 (15th October 2013)
 -------------
 

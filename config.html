@@ -59,6 +59,17 @@ pages).  By default, this
 is <code>http://www.biodalliance.org/release-X.Y</code> code where X.Y represents the
 current major and minor release numbers.
 
+<h5>noPersist</h5>
+
+Fully disables Dalliance's built-in session management.  When the page is reloaded, everything will be
+reset to the configuration passed to the Browser constructor.
+
+<h5>noPersistView</h5>
+
+Disable storing the current location in the session-management system.  All other options (notably,
+current track configurations are preserved).  This is useful if you are embedding little feature-centric
+browser instances into a larger application (e.g. a database with one page per gene).
+
 <h3>General options when configuring a tier</h3>
 
 <h5>name (required)</h5>
@@ -161,6 +172,18 @@ URI of a BAM file to access.  <i>e.g.</i>
 
 Explicitly specify the URI for the BAM index (.bam.bai) file.  If not specified, Dalliance tries appending '.bai' to the value
 of the <code>bamURI</code> parameter.
+
+<h3>Configuring a Tabix source</h3>
+
+Dalliance can access Tabix-indexed flatfiles.  Currently, the only payload type supported is VCF, but other
+formats may be added in future.
+
+{%highlight javascript%}
+{name: "Variants",
+ uri: "http://server/myfile.vcf.gz",
+ tier_type: 'tabix',
+ payload: 'vcf'}
+{%endhighlight%}
 
 <h3><a id='jbrowse-rest'>Configuring a JBrowse-REST track</a></h3>
 

@@ -5,8 +5,8 @@ layout: genome
 
   var b = new Browser({
     chr:                 '22',
-    viewStart:           30000000,
-    viewEnd:             30030000,
+    viewStart:           30700000,
+    viewEnd:             30900000,
     cookieKey:           'human-grc_h37',
 
     coordSystem: {
@@ -27,25 +27,30 @@ layout: genome
                                })
     },
 
-    sources:          [{name: 'Genome',
-                        uri:  'http://www.derkholm.net:8080/das/hg19comp/',
-                        desc: 'Human reference genome build GRCh37',
-                        tier_type: 'sequence',
-                        provides_entrypoints: true},
-                       {name: 'Genes',
-                        desc: 'Gene structures from Ensembl 59 (GENCODE 4)',
-                        uri: 'http://www.derkholm.net:8080/das/hsa_59_37d/',
-                        collapseSuperGroups: true,
-                        provides_karyotype: true,     
-                        provides_search: true},
-                       {name: 'Repeats',
+    sources:          [{name:                 'Genome',
+                       twoBitURI:            'http://www.biodalliance.org/datasets/hg19.2bit',
+                       tier_type: 'sequence'},
+                      {name: 'Genes',
+                       desc: 'Gene structures from GENCODE 19',
+                       bwgURI: 'http://www.biodalliance.org/datasets/gencode.bb',
+                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode.xml',
+                       collapseSuperGroups: true,
+                       trixURI: 'http://www.biodalliance.org/datasets/geneIndex.ix'},
+                      {name: 'Repeats',
                         desc: 'Repeat annotation from Ensembl 59', 
-                        uri: 'http://www.derkholm.net:8080/das/hsa_59_37d/',
-                        stylesheet_uri: 'http://www.derkholm.net/dalliance-test/stylesheets/ens-repeats.xml'},
-                       {name: 'CpG',
-                        desc: 'CpG observed/expected ratio',
-                        uri: 'http://www.derkholm.net:8080/das/hg19comp/',
-                        stylesheet_uri: 'http://www.derkholm.net/dalliance-test/stylesheets/cpg.xml'}],
+                        bwgURI: 'http://www.biodalliance.org/datasets/repeats.bb',
+                        stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats.xml'}
+                      ,{name: 'Conservation',
+                        desc: 'Conservation', 
+                        bwgURI: 'http://www.biodalliance.org/datasets/phastCons46way.bw',
+                        noDownsample: true}
+                    ,{name: 'GM12878 ChromHMM', desc: 'GM12878 ChromHMM Genome Segmentation', 
+                       pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg',
+                       bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/segmentations/jan2011/hub/gm12878.ChromHMM.bb',
+                       style: [{type: 'bigwig', style: {glyph: 'BOX', FGCOLOR: 'black', BGCOLOR: 'blue', HEIGHT: 8, BUMP: false, LABEL: false, ZINDEX: 20, BGITEM: true, id: 'style1'}}, 
+                              {type: 'bb-translation', style: {glyph: 'BOX', FGCOLOR: 'black', BGITEM: true, BGCOLOR: 'red', HEIGHT: 10, BUMP: true, ZINDEX: 20, id: 'style2'}}, 
+                              {type: 'bb-transcript', style: {glyph: 'BOX', FGCOLOR: 'black', BGCOLOR: 'white', HEIGHT: 10, ZINDEX: 10, BUMP: true, LABEL: true, id: 'style3'}}]}
+],
 
     browserLinks: {
       Ensembl: 'http://www.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
@@ -54,9 +59,6 @@ layout: genome
     },
 
     hubs: ['http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt'],
-
-    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_59_37d/'),
-    karyotypeEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_59_37d/')
   });
 	  </script>
 

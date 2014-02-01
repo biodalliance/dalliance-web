@@ -2,23 +2,18 @@
 layout: page
 title: Getting started
 ---
-<p style='margin-left: 30px; margin-right: 30px; background-color: rgb(250,220,255); padding: 10px'>
-<strong>Note:</strong> some of the screenshots on this page refer to version 0.7 or earlier of Dalliance, and will be updated soon.  Dalliance 0.8 has a new user interface, but everything is still there!
-<p>
-
 <p>
 Dalliance is a track-oriented genome viewer similar to
 <a href="http://www.ensembl.org/">Ensembl</a>, <a href="http://genome.ucsc.edu/">UCSC</a>, or <a href="http://www.gbrowse.org">GBrowse</a>.  However, it
 is a little different in operation because it uses recent extensions to
 web standards ("HTML 5") to offer a higher level of interactivity than
-most previous genome viewers.  It also uses <a href="http://biodas.org">DAS</a>
-to collect annotations from around the internet -- which will be important
-if you want to add custom data to a Dalliance browser.
+most previous genome viewers.  You can add your own data using either <a href="http://biodas.org">DAS</a>,
+or direct access to a range of standard genomic file formats.
 </p>
 
 <p>
 Before reading on, you might want
-to <a href="http://www.biodalliance.org/human/ncbi36/"
+to <a href="http://www.biodalliance.org/human37.html"
 target="_new">click here</a> to open a genome viewer in a new window.
 </p>
 
@@ -28,46 +23,42 @@ target="_new">click here</a> to open a genome viewer in a new window.
 Assuming that all is well, you should see a genome view something like this:
 </p>
 
-<img src="ss/view1.png" />
+<img src="ss/cview1.png" width="800" height="306">
 
 <p>
 You'll see several distinct tracks of information about the genome.  Some, such as
 the gene structures, are fetched from servers operated as part of the Dalliance
-project.  Others come from elsewhere -- for instance, DNA methylation data hosted
-at EBI.
+project.  Others come from elsewhere -- for instance, the chromatin segmentation track
+comes from the <a href="'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt'">ENCODE analysis trackhub</a> hosted at the EBI.
 </p>
 
 <p>
-To move around, point at the blue background of any of the tracks, hold down the
+To move around, point at the background of any of the tracks, hold down the
 left mouse button, and drag.  Alternatively, if your input device supports panning
 gestures, you can use these instead (<em>e.g.</em> with an Apple Magic Mouse, moving one finger
-horizontally across the top surface of the mouse will scroll).
+horizontally across the top surface of the mouse will scroll).  You can also use the "left"
+and "right" arrow buttons in the toolbar (<b>NB</b>the meaning of these buttons <a href="#leaping">changes
+depending on which track is selected</a>), or the arrow keys on your keyboard.
 </p>
 
 <p>
-You can scroll in or out by dragging the tab on the zoom slider:
+You can scroll in or out by dragging the tab on the zoom slider or using the +/- keys:
 <p>
-
-<img src="ss/zoom.png" />
-
-<p>
-If you rapidly zoom out, you may see a cross-hatched background.  This
-indicates that data currently hasn't been fetched for a region.  Wait a moment
-and the hatched regions will be replaced by genome annotation.
-</p>
-
-<img src="ss/view2.png" />
 
 <p>
 If you zoom in far enough, you will eventually see the base-pair-level genome
 sequence.  In the example below, you can see the ATG start codon of the protein-coding
-part of a gene.
+part of a gene, and see how sharply the phastCons conservation score increases at the edge
+of the protein coding region.
 </p>
 
-<img src="ss/view3.png" />
+<img src="ss/cview2.png" width="803" height="242">
+
+<p>Tapping the space bar allows you to toggle between two zoom levels.  By default,
+the secondary zoom level is a fully-zoomed-in base-pair view.
 
 <p>
-As you zoom in and out, notice that any feature directly underneath the red
+As you zoom in and out, notice that any feature directly underneath the blue
 guideline remains centred.  You can double-click on any feature to center
 it, then zoom in to find other features which might be aligned with it.  For
 larger features, you can also double-click close to the edges of the feature
@@ -75,87 +66,44 @@ to center that edge.
 
 <h3>Searching</h3>
 
-To jump to specific coordinates, or search for a named feature, click on the location
-label:
-
-<img src="ss/jump.png" />
-
-<p>
-If a named feature can be found in the DAS system, it will be highlighted in the browser,
-e.g.:
+To jump to specific coordinates, or search for a named feature, type in the location
+box in the toolbar.  If a named feature can be found in any searchable track you
+currently have active, it will be highlighted in the browser, e.g.:
 </p>
 
-<img src="ss/view4.png" />
+<img src="ss/cview3.png" width="802" height="256">
 
-<p>
-<strong>NB</strong> feature search currently has a few limitations.  Most significantly,
-gene names are cases sensitive (which means you need to search for "BRCA2" in human but
-"Brca2" in mouse!), and the system deals badly with searches which match to more than one
-region of the genome.  We're very keen to improve this aspect of the system in the future.
-</p>
+<h3 id="leaping">Leaping</h3>
 
-<h3>Customizing your display</h3>
+You can select a track by clicking once on its label.  You can also use the keyboard
+up and down arrows to quickly switch selected tracks.
 
-<p>
-Some types of track have a customization button in their name-tab.  Genes and some other
-"region" tracks have an expand/collapse button:
-</p>
+Some track types support rapid movement between features.  We call this <a href="http://en.wikipedia.org/wiki/Archy#Leaping">"leaping"</a>.
+Leaping is activated by clicking the "left" and "right" buttons in the toolbar.  For tracks containing "simple" features (genes, peak calls, etc),
+leaping will take you to the next feature in the selected direction -- regardless of how far away it might be.  You can also leap using CTRL + left/right
+arrow keys (although note that on Macs, the Mission Control system traps these by default, and you may need to change the Mission Control keyboard
+settings in the Control Panel).
 
-<img src="ss/toggle.png" />
+Some quantitative tracks support a variant of leaping where you can select a threshold, and leap to the next region containing scores
+greated than the selected threshold.  If this is available, you'll see a red line indicating the threshold.  The threshold can be adjusted
+in the <a href="#custom">track editor</a> or using CTRL+UP/DOWN arrows.
 
-<p>
-In the case of gene tracks, expanding will show all the annotated splice variants.
-</p>
+<img src="ss/cview4.png" width="803" height="201">
 
-<p>
-Quantitative tracks can be configured by clicking on the magnifying glass, for instance
-to adjust the y-axis scale:
-</p>
+<h3 id="custom">Customizing tracks</h3>
 
-<img src="ss/quant.png" />
+<p>You can customize tracks by selecting one then clicking the track button (or pressing "E")
+to open the track editor</p>
+
+<img src="ss/tieredit.png" width="827" height="289">
+
+<p>The range of options varies depending on track types.  Currently, quantitative tracks
+are easiest to customize.</p>
 
 <p>
 You can change the order of tracks by dragging their name-tabs and dropping them elsewhere
-in the browser display:
+in the browser display.  If you get things too far out of order, you can reset the browser
+from the Settings panel.
 <p>
 
-<p>You can also delete a track by dragging its name-tab to the waste bin.</p>
 
-<p>
-Adding new tracks...
-</p>
-
-<p>
-If you delete important tracks or otherwise get the browser into a state you don't want,
-just hit the "reset" button in the toolbar.
-</p>
-
-<img src="ss/reset.png" />
-
-<h3>Exporting images</h3>
-
-<p>
-Click the export button to save the current browser state in either SVG or PDF format:
-<p>
-
-<img src="ss/export.png" />
-
-<p>
-SVG format is good if you want to add additional graphics elements using tools like
-<a href="http://www.inkscape.org/">Inkscape</a>.  PDF is generally best for use in publications
-and presentations.  Note that although the SVG export view is generated by the Dalliance
-code running in your web browser it is currently (December 2010) not practical for a
-pure browser-based application to save files to local storage unless they have been
-downloaded from a server.  Therefore, the SVG data is sent to a server then immediately
-returned (we hope this will change in the future).  PDFs are generated on the server using
-<a href="http://batik.apache.org/">Apache Batik</a>.
-</p>
-
-<h3>Tips and tricks</h3>
-
-<ul>
-<li>You can also perform basic navigation using the keyboard (arrow keys to scroll, shift-arrow to scroll fast, +/- to zoom).</li>
-<li>Tap SPACE to toggle between two different zoom levels.  By default, the secondary zoom level is set to base-pair resolution.</li>
-<li>Tap RETURN to dismiss all currently-visible "expand/collapse track" warnings.</li>
-<li>Tap 'T' to expand or collapse gene structures.</li>
-</ul>

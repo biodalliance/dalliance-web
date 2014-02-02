@@ -3,7 +3,7 @@ layout: page
 title: Release notes
 ---
 
-Version 0.11.0 (XX February 2014)
+Version 0.11.0 (2 February 2014)
 -------------
 
  * New track configuration tool.

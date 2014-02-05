@@ -1,0 +1,73 @@
+---
+layout: genome
+---
+    <script language="javascript">
+
+  var b = new Browser({
+    chr:                 '22',
+    viewStart:           30300000,
+    viewEnd:             30500000,
+    cookieKey:           'human-grc_h38',
+
+    coordSystem: {
+      speciesName: 'Human',
+      taxon: 9606,
+      auth: 'GRCh',
+      version: '38',
+      ucscName: 'hg38'
+    },
+
+    chains: {
+
+      /*
+      hg18ToHg19: new Chainset('http://www.derkholm.net:8080/das/hg18ToHg19/', 'NCBI36', 'GRCh37',
+                               {
+                                  speciesName: 'Human',
+                                  taxon: 9606,
+                                  auth: 'NCBI',
+                                  version: 36,
+                                  ucscName: 'hg18'
+                               })  */
+
+      hg19ToHg38: new Chainset('http://www.derkholm.net:8080/das/hg19ToHg38/', 'GRCh37', 'GRCh38',
+                               {
+                                  speciesName: 'Human',
+                                  taxon: 9606,
+                                  auth: 'GRCh',
+                                  version: 37,
+                                  ucscName: 'hg19'
+                               })
+    },
+
+    sources:          [{name:                 'Genome',
+                       twoBitURI:            'http://www.biodalliance.org/datasets/hg38.2bit',
+                       tier_type: 'sequence'}
+
+
+                      ,{name: 'Genes',
+                       desc: 'Gene structures from GENCODE 19',
+                       bwgURI: 'http://www.biodalliance.org/datasets/gencode.bb',
+                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode.xml',
+                       collapseSuperGroups: true,
+                       trixURI: 'http://www.biodalliance.org/datasets/geneIndex.ix',
+                       mapping: 'hg19ToHg38'}
+
+                      ,{name: 'Repeats',
+                        desc: 'Repeat annotation from UCSC', 
+                        bwgURI: 'http://www.biodalliance.org/datasets/GRCh38/repeats.bb',
+                        stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats2.xml'}
+],
+
+    browserLinks: {
+      Ensembl: 'http://www.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
+      UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=chr${chr}:${start}-${end}',
+      Sequence: 'http://www.derkholm.net:8080/das/hg19comp/sequence?segment=${chr}:${start},${end}'
+    },
+
+    hubs: [{url: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt', genome: 'hg19', mapping: 'hg19ToHg38'}],
+  });
+	  </script>
+
+
+
+      <div id='svgHolder'>Dalliance goes here...</div>

@@ -53,13 +53,21 @@ Typical embedding code looks something like:
 </p>
 
 {% highlight html %}
-<script language="javascript" src="http://www.biodalliance.org/release-0.9/dalliance-compiled.js"></script>
+<script language="javascript" src="http://www.biodalliance.org/release-0.11/dalliance-compiled.js"></script>
 <script language="javascript">
   new Browser({
     chr:          '22',
     viewStart:    30000000,
     viewEnd:      30030000,
     cookieKey:    'human',
+
+    coordSystem: {
+      speciesName: 'Human',
+      taxon: 9606,
+      auth: 'NCBI',
+      version: '36',
+      ucscName: 'hg18'
+    },
 
     sources:     [{name:                 'Genome',      
                    uri:                  'http://www.derkholm.net:8080/das/hg18comp/',        
@@ -77,13 +85,7 @@ Typical embedding code looks something like:
                   {name:                 'MeDIP raw',
                    uri:                  'http://www.derkholm.net:8080/das/medipseq_reads'},
                   {name:                 'MeDIP-seq',
-                   uri:                  'http://www.ebi.ac.uk/das-srv/genomicdas/das/batman_seq_SP/'}],
-
-    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_54_36p/'),
-    browserLinks: {
-        Ensembl: 'http://ncbi36.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
-        UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=chr${chr}:${start}-${end}',
-    }
+                   uri:                  'http://www.ebi.ac.uk/das-srv/genomicdas/das/batman_seq_SP/'}]
   });
 </script>
 

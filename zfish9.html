@@ -47,6 +47,8 @@ layout: genome
     searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/dre_61_9a/'),
     karyoEndpoint: new DASSource('http://www.derkholm.net:8080/das/dre_61_9a/'),
  
+        uiPrefix: '{{site.uiprefix}}/',
+ 
     browserLinks: {
         Ensembl: 'http://www.ensembl.org/Danio_rerio/Location/View?r=${chr}:${start}-${end}',
         UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=danRer7&position=chr${chr}:${start}-${end}'

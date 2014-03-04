@@ -37,6 +37,8 @@ layout: genome
     searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/cel_61_220/'),
     karyoEndpoint: new DASSource('http://www.derkholm.net:8080/das/cel_61_220/'),
  
+        uiPrefix: '{{site.uiprefix}}/',
+ 
     browserLinks: {
         Ensembl: 'http://www.ensembl.org/Caenorhabditis_elegans/Location/View?r=${chr}:${start}-${end}'
     }

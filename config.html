@@ -15,13 +15,23 @@ These options configure the default view when the browser starts for the first t
     viewEnd:      30030000
 {%endhighlight%}
 
+<h5>sources</h5>
+
+An array of source or track configurations (see below).
+
 <h5>maxViewWidth</h5>
 
 The maximum width of the visible region, configured in bases.  Default is 500000.
 
 <h5>pageName</h5>
 
+The id of an element on the page whose contents will be replaced with the Dalliance instance
+when it starts up.
+
 <h5>cookieKey</h5>
+
+String used as a key for session persistance.  It should be unique amongst all Dalliance
+instances served from a given domain.  Not relevant if <code>noPersist</code> is true.
 
 <h5>coordSystem</h5>
 
@@ -70,6 +80,17 @@ Disable storing the current location in the session-management system.  All othe
 current track configurations are preserved).  This is useful if you are embedding little feature-centric
 browser instances into a larger application (e.g. a database with one page per gene).
 
+<h5>noDefaultLabels</h5>
+
+Do not add the standard "tier tab" labels.  Intended for very lightweight embedded browser instances/
+
+<h5>tierBackgroundColors</h5>
+
+Array of CSS color strings used as background colors.  Dalliance cycles through the available
+colours in order.  In the special case of this property being set to <code>null</code>, tiers
+will have transparent backgrounds.  This is only recommended if there's a specific reason
+for letting the background show through.
+
 <h3>General options when configuring a tier</h3>
 
 <h5>name (required)</h5>
@@ -88,6 +109,10 @@ to use when displaying this data.  For DAS sources, this overrides the source's 
 For other sources, this allows richer style configuration.  More information about Dalliance's implementation
 of DAS stylesheets can be found <a href='stylesheets.html'>here</a>.
 
+<h5>style</h5>
+
+Array of <a href='stylesheets.html#json'>JSON-encoded style rules</a>.
+
 <h5>mapping</h5>
 
 Remap the data for this source using a mapping specified in the global <code>chains</code> configuration.
@@ -96,6 +121,11 @@ Remap the data for this source using a mapping specified in the global <code>cha
 
 Hint to allow more "gene-like" rendering for some data sources.  Will probably be deprecated once
 we find a better way of determining which sources provide gene annotations.
+
+<h5>pinned</h5>
+
+If <code>true</code>, the tier will be placed in the non-scrolling "pinned" section at the top of
+the browser.
 
 <h5>featureInfoPlugin</h5>
 

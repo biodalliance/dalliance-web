@@ -1,0 +1,88 @@
+---
+layout: page
+title: Interacting with Dalliance
+---
+If you retain a reference to the <code>Browser</code> object corresponding to your Dalliance
+instance, you can call methods on this to interact with the genome browser and integrate it
+more tightly with your own code.
+
+<h5>setLocation([chr], start, end)</h5>
+
+Call this to navigate to a specific genomic location.  If the specified location is close to the
+existing location and the width of the requested region is equal to the currently-displayed region
+(+/- ~0.1%) then the operation is handled as a scroll, otherwise Dalliance will reload data in the
+new location.
+
+{% highlight javascript %}
+function moveRight() {
+    browser.setLocation(
+        browser.chr,
+        (browser.viewStart|0) + 1000,
+        (browser.viewEnd|0) + 1000
+    );
+}
+{% endhighlight %}
+
+<h5>addTier(config)</h5>
+
+Create a new browser tier using the specified <a href="config.html">configuration object</a>.
+
+{% highlight javascript %}
+browser.addTier({
+    name: 'Repeats',
+    desc: 'Repeat annotation from Ensembl 59', 
+    bwgURI: 'http://www.biodalliance.org/datasets/repeats.bb',
+    stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats.xml'
+});
+{% endhighlight %}
+
+<h5>removeTier(config)</h5>
+
+Remove the first browser tier whose configuration matches the specified configuration object.
+
+{% highlight javascript %}
+browser.removeTier({
+    name: 'Repeats',
+    desc: 'Repeat annotation from Ensembl 59', 
+    bwgURI: 'http://www.biodalliance.org/datasets/repeats.bb',
+    stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats.xml'
+});
+{% endhighlight %}
+
+(This API may change in future to be better behaved when multiple tracks match the same configuration).
+
+<h5>highlightRegion(chr, min, max)</h5>
+
+Create a highlight over the specified genomic region.
+
+<h5>clearHighlights()</h5>
+
+Remove all the highlighted regions.
+
+<h3>Event handlers</h3>
+
+<h5>addViewListener(callback)</h5>
+
+Called when the viewed region changes.  Parameters passed to the callback are:
+
+<ul>
+<li><code>chr</code>: current sequence name</li>
+<li><code>min</code>: minimum visible position (rounded to int)</li>
+<li><code>max</code>: maximim visible position (rounded to int)</li>
+</ul>
+
+{% highlight javascript %}
+browser.addViewListener(function(chr, min, max) {
+    var link = document.getElementById('enslink');
+    link.href = 'http://www.ensembl.org/Homo_sapiens/Location/View?r=' + 
+        chr + ':' + min + '-' + max;
+});
+{% endhighlight %}
+
+<h5>addTierListener(callback)</h5>
+
+Called when the set or order of tiers changes.
+
+<h5>addFeatureListener(callback)</h5>
+
+Called when the user clicks on a feature.

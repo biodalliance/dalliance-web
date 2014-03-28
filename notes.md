@@ -3,6 +3,20 @@ layout: page
 title: Release notes
 ---
 
+Version 0.12 (XX April 2014)
+-------------
+
+ * Support for "textual" file formats: BED, WIG, and VCF.
+ * Allow the main "tracks" panel to scroll independently of the rest of
+   the user interface.
+ * Allow tracks to be pinned to the top of the display.
+ * Allow more than one local file to be added in a single operation.
+ * An option to export the current Dalliance browser configuration.
+ * Optional use of web-workers (helpers which can concurrently
+    fetch and process data) for better responsiveness when viewing
+    large amounts of data.
+ * Performance improvements, especially when accessing BAM files.
+
 Version 0.11.0 (2 February 2014)
 -------------
 

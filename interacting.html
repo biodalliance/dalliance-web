@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Interacting with Dalliance
+title: Interacting with the Dalliance API.
 ---
 If you retain a reference to the <code>Browser</code> object corresponding to your Dalliance
 instance, you can call methods on this to interact with the genome browser and integrate it
@@ -11,7 +11,8 @@ more tightly with your own code.
 Call this to navigate to a specific genomic location.  If the specified location is close to the
 existing location and the width of the requested region is equal to the currently-displayed region
 (+/- ~0.1%) then the operation is handled as a scroll, otherwise Dalliance will reload data in the
-new location.
+new location.  If <code>chr</code> is <code>null</code> or <code>undefined</code>, the current
+chromosome is used.
 
 {% highlight javascript %}
 function moveRight() {
@@ -85,4 +86,14 @@ Called when the set or order of tiers changes.
 
 <h5>addFeatureListener(callback)</h5>
 
-Called when the user clicks on a feature.
+Called when the user clicks on a feature.  Parameters passed to the callback are:
+
+<ul>
+<li><code>event</code>: the DOM <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent"><code>MouseEvent</code></a> which triggered this callback.</li>
+<li><code>feature</code>: the feature which the user clicked on.</li>
+<li><code>hit</code>: an array of Feature and Group objects representing the clicked feature plus any parents.</li>
+<li><code>tier</code>: the Dalliance tier in which the click occurred.</li>
+</ul>
+
+Note that if you want to display extra information when a feature is clicked, you may be better served by
+the <a href="plugins.html#feature-info">Feature Info plugin</a> API.

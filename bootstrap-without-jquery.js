@@ -69,6 +69,12 @@
             className = className.replace(' open ', ' ');
             target.className = className;
         } else {
+            // Close menus that are currently open (added by TAD).
+            for (var i = 0, dropdown, len = dropdowns.length; i < len; i++) {
+                dropdown = dropdowns[i];
+                dropdown.parentElement.className = (' ' + dropdown.parentElement.className + ' ').replace(' open ', ' ');
+            }
+
             // Show the menu
             target.className += ' open ';
         }

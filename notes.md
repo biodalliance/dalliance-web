@@ -3,7 +3,7 @@ layout: page
 title: Release notes
 ---
 
-Version 0.12 (XX April 2014)
+Version 0.12 (XX May 2014)
 -------------
 
  * Support for "textual" file formats: BED, WIG, and VCF.
@@ -16,6 +16,9 @@ Version 0.12 (XX April 2014)
     fetch and process data) for better responsiveness when viewing
     large amounts of data.
  * Performance improvements, especially when accessing BAM files.
+ * Support for a "bigChain" format (.chain files encoded as bigBeds) which
+    can be used as an alignment source for coordinate mapping.
+ * New build system, based on NPM, Gulp.js, and Browserify.
 
 Version 0.11.0 (2 February 2014)
 -------------

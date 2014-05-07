@@ -104,6 +104,53 @@ hubs: ['http://www.biodalliance.org/datasets/testhub/hub.txt',
 
 ...and will appear as extra tabs in the track-addition user interface.
 
+<h3><a id='liftOver'>Configuring coordinate-system mappings</a></h3>
+
+Dalliance can do on-the-fly coordinate system mapping.  The set of available mappings is configured by the <code>chains</code> property, which takes a map of mapping names to mapping definitions, e.g.:
+
+{%highlight javascript %}
+    chains: {
+      hg18ToHg19: {uri: 'http://www.biodalliance.org/datasets/GRCh37/hg18ToHg19.bb',
+                   type: 'bigbed',
+                   coords: {
+                        speciesName: 'Human',
+                        taxon: 9606,
+                        auth: 'NCBI',
+                        version: 36
+                   }
+                  }
+    }
+{%endhighlight%}
+
+You can use arbitrary strings as names for mappings.  When configuring a track in the <code>sources</code> array, you can specify which mapping to use, e.g.:
+
+{%highlight javascript %}
+sources: [
+  {name: "My track",
+   bwgURI: "http://some/old.data.bb",
+   mapping: 'hg18ToHg19'}
+]
+{%endhighlight%}
+
+Each mapping definition has the following properties:
+
+<h5>uri</h5>
+
+URI to access alignment data.
+
+<h5>type (optional)</h5>
+
+Currently supported values are "bigbed", which specifies a bigBed-encoded version of the chain file
+format, produced by the <a href="https://github.com/dasmoth/hubbub">chain2bed</a> utility.  If <code>type</code> is not specified, alignment-DAS is assumed.  Alignment DAS support is deprecated as of
+Dalliance 0.12.  Please contact Thomas Down for more details if you really need it.
+
+<h5>credentials (optional)</h5>
+
+Support credentials when accessing the alignment data.
+
+<h5>coords (required)</h5>
+
+The coordinate system that this mapping is <em>from</em> (it is assumed to be) <em>to</em> the default coordinate system of the browser.  This is important, because it controls what gets presented if the user is prompted to choose a coordinate system when the user manually adds data.  If possible, the <code>ucscName</code> of the coordinate system should also be specified -- if so, coordinate system mapping will be automatically supported when interacting with track-hubs which provide data for more than one genome assembly.
 
 <h3><a id='uielements'>Fine-grained control over the default UI</a></h3>
 

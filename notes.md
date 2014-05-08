@@ -3,7 +3,7 @@ layout: page
 title: Release notes
 ---
 
-Version 0.12 (XX May 2014)
+Version 0.12 (8 May 2014)
 -------------
 
  * Support for "textual" file formats: BED, WIG, and VCF.

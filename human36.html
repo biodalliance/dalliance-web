@@ -9,6 +9,14 @@ layout: genome
     viewEnd:      30030000,
     cookieKey:    'ndw-human-ncbi36',
 
+    coordSystem: {
+      speciesName: 'Human',
+      taxon: 9606,
+      auth: 'NCBI',
+      version: '36',
+      ucscName: 'hg18'
+    },
+
     chains: {
       hg19ToHg18: new Chainset('http://www.derkholm.net:8080/das/hg19ToHg18/', 'GRCh37', 'NCBI36',
                                {

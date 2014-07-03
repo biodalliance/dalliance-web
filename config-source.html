@@ -81,6 +81,17 @@ tier rather than a DAS features tier.
 Enables/disables the <code>maxbins</code> DAS extension for server-side downsampling
 of quantitative data.  Default is <code>true</code>.
 
+<h3>Configuring a binary sequence source</h3>
+
+<h5>twoBitURI (required)</h5>
+
+URI for the .2bit sequence file.  Alternatively, <code>twoBitBlob</code> can be used to configure
+a local file as the sequence source.
+
+<h5>tier_type</h5>
+
+Setting this to the string <code>'sequence'</code> indicates that this is a sequence tier.
+
 <h3>Configuring a bigwig or bigbed source</h3>
 
 BigWig and BigBed files are configured in the same manner -- Dalliance automatically distinguished between

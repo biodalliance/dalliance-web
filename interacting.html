@@ -97,3 +97,14 @@ Called when the user clicks on a feature.  Parameters passed to the callback are
 
 Note that if you want to display extra information when a feature is clicked, you may be better served by
 the <a href="plugins.html#feature-info">Feature Info plugin</a> API.
+
+<h5>addFeatureHoverListener(callback)</h5>
+
+Called when the pointer hovers over a feature.  Probably never called on touch-screen devices.
+
+The callback parameters are the same as for <code>addFeatureListener</code>.
+
+<h5>addInitListener(callback)</h5>
+
+Call on a newly-constructed <code>Browser</code> instance.  The callback is invoked when initializatin
+is complete.

@@ -30,10 +30,31 @@ arguments as well as exact matches, e.g.:
   </GLYPH>
 </TYPE>
 <TYPE id="repeat">
-  <GLYPH zoom="low">
+  <GLYPH>
     <BOX>
       <HEIGHT>10</HEIGHT>
       <BGCOLOR>orange</BGCOLOR>
+    </BOX>
+  </GLYPH>
+</TYPE>
+{%endhighlight%}
+
+<h5>Orientation matching (since 0.11)</h5>
+
+Features can be filtered by orientation, e.g.:
+
+{% highlight xml %}
+<TYPE id="foo" orientation="+">
+  <GLYPH>
+    <BOX>
+      <BGCOLOR>red</BGCOLOR>
+    </BOX>
+  </GLYPH>
+</TYPE>
+<TYPE id="foo" orientation="-">
+  <GLYPH>
+    <BOX>
+      <BGCOLOR>blue</BGCOLOR>
     </BOX>
   </GLYPH>
 </TYPE>
@@ -49,6 +70,11 @@ may be removed in the future.
 
 This can be applied to small glyphs to specify the size.  If not specified, size is equal to the height.
 Mostly useful in conjuction with the <code>SCATTER</code> attribute.
+
+<h5>RSIZE (since 0.12)</h5>
+
+This property can be applied to small glyphs to specify their size, as an alternative to <code>SIZE</code>.
+The value should be between 0 and 1, and controls glyph size as a fraction of the total height of the track.
 
 <h5><a id='scatter'>SCATTER (since 0.10)</a></h5>
 
@@ -86,12 +112,49 @@ in scatter plots.
 
 <h5>PLIMSOLL glyph (since 0.11)</h5>
 
-A circle with a line through the mid-point -- good for representing point features.
+A circle with a vertical line through the mid-point -- good for representing point features.
 
 <h5>BGITEM option (since 0.11)</h5>
 
 Enable per-feature setting of a feature's primary colour (works with BED/bigBed files with colours stored in the "itemRgb" field).
 
-<h5><a id='json'>JSON-encoded stylesheets (since 0.8)</a></h5>
+<h3><a id='json'>JSON-encoded stylesheets (since 0.8)</a></h3>
 
-...
+As an alternative to writing XML stylesheets, it is possible to write stylesheets in a JSON-encoded notation, directly
+in your Dalliance configuration file.  The glyphs, attribute, and filters available in JSON-encoded stylesheets are
+exactly the same as in XML stylesheets.  It currently isn't possible to load JSON-encoded stylesheets from external
+files, although this may change in the future.
+
+A JSON-encoded stylesheet is an array of Javascript objects with the following properties:
+
+
+<h5>type</h5>
+
+Equivalent to the <code>TYPE</code> ID in an XML stylesheet.  Required, but may be set to <code>default</code>
+
+<h5>method (optional)</h5>
+<h5>orientation (optional)</h5>
+<h5>zoom (optional) </h5>
+
+May be <code>low</code>, <code>medium</code>, or <code>high</code>.
+
+<h5>style (required)</h5>
+
+A Javascript object.  This <em>must</em> have a property named <code>glyph</code>, which is the glyph type
+to use.  It may have other properties (e.g. <code>BGCOLOR</code>, <code>BUMP</code>, etc.) which are interpretted
+the same as in an XML stylesheet.
+
+{% highlight javascript %}
+[
+   {type: 'default', 
+    style: {
+       glyph: 'PLIMSOLL', 
+       HEIGHT: '12', 
+       STROKECOLOR: 'black',
+       FGCOLOR: 'red'}},
+   {type: 'nasty',
+    style: {
+        glyph: 'CROSS',
+        FGCOLOR: 'green'}}
+]
+{% endhighlight %}

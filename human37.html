@@ -54,6 +54,7 @@ layout: genome
 ],
 
     uiPrefix: '{{site.uiprefix}}/',
+    fullScreen: true,
 
     browserLinks: {
       Ensembl: 'http://www.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
@@ -61,7 +62,7 @@ layout: genome
       Sequence: 'http://www.derkholm.net:8080/das/hg19comp/sequence?segment=${chr}:${start},${end}'
     },
 
-    hubs: ['http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt'],
+    hubs: ['http://ngs.sanger.ac.uk/production/ensembl/regulation/hub.txt', 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt'],
   });
 	  </script>
 

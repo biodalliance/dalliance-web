@@ -34,13 +34,12 @@ layout: genome
                        tier_type: 'sequence'}
 
 
-                      ,{name: 'Genes (from GRCh37)',
-                       desc: 'Gene structures from GENCODE 19',
-                       bwgURI: 'http://www.biodalliance.org/datasets/gencode.bb',
-                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode.xml',
+                      ,{name: 'GENCODE',
+                       desc: 'Gene structures from GENCODE 20',
+                       bwgURI: 'http://www.biodalliance.org/datasets/GRCh38/gencode.v20.annotation.bb',
+                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode2.xml',
                        collapseSuperGroups: true,
-                       trixURI: 'http://www.biodalliance.org/datasets/geneIndex.ix',
-                       mapping: 'hg19ToHg38'}
+                       trixURI: 'http://www.biodalliance.org/datasets/GRCh38/gencode.v20.annotation.ix'}
 
                       ,{name: 'Repeats',
                         desc: 'Repeat annotation from UCSC', 
@@ -48,7 +47,8 @@ layout: genome
                         stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats2.xml'}
 ],
 
-    uiPrefix: '{{site.uiprefix}}/',
+    prefix: '{{site.uiprefix}}/',
+    fullScreen: true,
 
     browserLinks: {
       Ensembl: 'http://www.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
@@ -56,7 +56,7 @@ layout: genome
       Sequence: 'http://www.derkholm.net:8080/das/hg19comp/sequence?segment=${chr}:${start},${end}'
     },
 
-    hubs: [{url: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt', genome: 'hg19', mapping: 'hg19ToHg38'}],
+    hubs: ['http://ngs.sanger.ac.uk/production/ensembl/regulation/hub.txt', {url: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt', genome: 'hg19', mapping: 'hg19ToHg38'}],
   });
 	  </script>
 

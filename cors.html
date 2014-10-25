@@ -1,0 +1,125 @@
+---
+layout: page
+title: Making data available for Biodalliance
+---
+<p>
+Biodalliance is a normal web application and must abide by all the restrictions
+and security policies imposed on web applications.  The most significant of these
+is the <a href="http://en.wikipedia.org/wiki/Same-origin_policy">Same-origin policy</a>.
+Briefly, this means that a web page loaded from a given server can generally only
+load additional resources from the same server.  There are some historical exceptions
+to this (for instance, images can be loaded from anywhere), but these aren't relevant
+to tools viewing custom data types.  Instead, a framework called 
+<a href="http://enable-cors.org/">CORS</a> has been developed to flag specific
+resources as valid targets for cross-origin requests.  All major web browsers
+have supported this for some years now, and Biodalliance relies on CORS for all
+access to third party data.  CORS is straightforward to implement on most web
+servers.
+</p>
+
+<p>
+The same-origin policy and the CORS frameworks are based on the concept of
+Origins.  The origin is the protocol, hostname, and (where specific) port
+components of a URL.  The following are all different origins:
+
+<ul>
+<li>http://www.biodalliance.org/</li>
+<li>http://www.biodalliance.org:8080/</li>
+<li>https://www.biodalliance.org</li>
+</ul>
+
+even though they all actually point to the same server.
+</p>
+
+<p>
+If you've installed your own instance of Biodalliance, and have some datasets
+hosted on the same origin as the main page of your Biodalliance installation,
+you'll be able to access that data from Biodalliance regardless of the CORS
+status of those resources.  However, unless this is unreleased data that you're
+displaying for your own use, please consider using CORS headers anyway, to make
+your data easily accessible to other users of Biodalliance and other web-based
+visualization tools.
+</p>
+
+<h2>CORS for data files</h2>
+
+<p>
+If you're serving static data files, you need to configure your web server to add
+a few headers when serving up these files.  There's a helpful introduction on how
+to do this in a wide variety of servers <a href="http://enable-cors.org/server.html">here</a>.
+</p>
+
+<p>
+However, most file types accessed by Biodalliance are <em>indexed</em>, e.g.
+bigWig, bigBed, Tabix, etc, and Biodalliance only fetches the required parts
+of the file.  This is acheived by setting the <code>Range</code> header on
+all requests.  Sending custom headers to cross-origin resources is a feature
+which must be explicitly enabled with another CORS header.
+
+{% highlight html %}
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: Range
+Access-Control-Max-Age: 36000
+{% endhighlight %}
+
+the <code>Access-Control-Max-Age</code> header is optional but allows caching of
+CORS information, reducing the number of "pre-flight" HTTP requests that are required
+and thus improving performance, especially over slower connections.
+</p>
+
+<p>
+In the Apache server, a suitable configuration might look like:
+</p>
+
+{% highlight html %}
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Headers "Range"
+Header set Access-Control-Max-Age "36000"
+{% endhighlight %}
+
+
+<h2>CORS for secure resources</h2>
+
+Biodalliance is able to access resources with access controlled by HTTP authentication.
+It can also potentially access resources with other access control systems (e.g. OAuth)
+so long as suitable cookies have been set.  However, the combination of restricted access
+resources and cross-origin access poses some additional complications.
+
+<ul>
+<li>An additional <code>Access-Control-Allow-Credentials: true</code> flag is required.</li>
+<li>It is no longer permissable to use a wildcard in the <code>Access-Control-Allow-Origin</code>
+header -- you must either hardcode a specific origin (e.g. http://www.biodalliance.org), or echo
+back the value in the <code>Origin</code> request header.</li>
+<li>If you're using HTTP authentication, you need to be aware that the browser will make an OPTIONS
+request <em>before</em> prompting the user for authentication, and steps need to be taken to ensure
+that this succeeds.</li>
+</ul>
+
+The following Apache configuration sample may be a helpful starting point:
+
+{% highlight text %}
+<Directory /var/www/secure/>
+    Options  FollowSymLinks MultiViews
+    AllowOverride FileInfo
+    Order allow,deny
+    allow from all
+    <LimitExcept OPTIONS>
+        Require user dalliance
+    </LimitExcept>
+    AuthType Basic
+    AuthName "Dalliance security test"
+    AuthUserFile /var/data/dalliance-passwd
+
+
+    SetEnvIf Origin "http(s)?://.*$" AccessControlAllowOrigin=$0
+    Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+    Header set Access-Control-Allow-Headers "Range"
+    Header set Access-Control-Allow-Credentials "true"       
+</Directory>
+{% endhighlight %}
+
+<h2>CORS for custom web services</h2>
+
+If you are setting up custom web services to provide data to Biodalliance, you'll also
+want to include an Access-Control-Allow-Origin header in your responses.  DAS middleware
+including Proserver and MyDAS implements CORS by default.

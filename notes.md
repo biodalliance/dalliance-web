@@ -3,6 +3,17 @@ layout: page
 title: Release notes
 ---
 
+Version 0.13 (XX Nov 2014)
+-------------
+
+ * BAM rendering improvements (thanks to Yifei Men)
+ * Improved guideline when viewing base-pair resolution data (thanks to Daniel Rice)
+ * BAM index-index support (thanks to Dan Vanderkam)
+ * Amino acid translations of genes (thanks to Yifei Men)
+ * Added support for exporting bitmap (PNG) images.
+ * BAM and navigation bug fixes.
+ * Better placement of feature labels
+
 Version 0.12 (8 May 2014)
 -------------
 

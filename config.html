@@ -62,12 +62,19 @@ if it is defined.  This enables <a href='#hub'>track-hub support</a> to work pro
 If true, attempt to change the title of the web browser window to reflect the species name being displayed.  Generally not
 wanted for embedded browsers.
 
-<h5>uiPrefix</h5>
+<h5>prefix</h5>
 
-URL from which static browser UI resources should be downloaded (CSS, images, and help
-pages).  By default, this
+URL from which static browser resources should be downloaded (CSS, images, help
+pages, and the Javascript "web worker" code).  By default, this
 is <code>http://www.biodalliance.org/release-X.Y</code> code where X.Y represents the
-current major and minor release numbers.
+current major and minor release numbers.  The <code>uiPrefix</code> option is a (deprecated)
+synonym.
+
+<h5>maxWorkers</h5>
+
+The maximum number of web-workers to us when fetching data.  If set to 0, the web worker system
+is disabled and all data fetching will be performed on the main UI thread.  Using workers generally
+improves responsiveness but may increase resource usage.
 
 <h5>noPersist</h5>
 

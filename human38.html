@@ -35,35 +35,30 @@ layout: genome
 
 
                       ,{name: 'GENCODE',
-                       desc: 'Gene structures from GENCODE 20',
-                       bwgURI: 'http://www.biodalliance.org/datasets/GRCh38/gencode.v20.annotation.bb',
-                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode2.xml',
+                       desc: 'Gene structures from GENCODE 21',
+                       bwgURI: '//www.biodalliance.org/datasets/GRCh38/gencode.v21.annotation.bb',
+                       stylesheet_uri: '//www.biodalliance.org/stylesheets/gencode2.xml',
                        collapseSuperGroups: true,
-                       trixURI: 'http://www.biodalliance.org/datasets/GRCh38/gencode.v20.annotation.ix'}
+                       trixURI: '//www.biodalliance.org/datasets/GRCh38/gencode.v21.annotation.ix'}
 
                       ,{name: 'GENCODEv19',
+                       disabled: true,
                        desc: 'Gene structures from GENCODE 19',
-                       bwgURI: 'http://www.biodalliance.org/datasets/gencode.bb',
-                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode.xml',
+                       bwgURI: '//www.biodalliance.org/datasets/gencode.bb',
+                       stylesheet_uri: '//www.biodalliance.org/stylesheets/gencode.xml',
                        collapseSuperGroups: true,
-                       pennant: 'http://genome.ucsc.edu/images/19.jpg',
-                       trixURI: 'http://www.biodalliance.org/datasets/gene-index.ix',
+                       pennant: '//genome.ucsc.edu/images/19.jpg',
+                       trixURI: '//www.biodalliance.org/datasets/gene-index.ix',
                        mapping: 'hg19ToHg38'}
 
                       ,{name: 'Repeats',
                         desc: 'Repeat annotation from UCSC', 
-                        bwgURI: 'http://www.biodalliance.org/datasets/GRCh38/repeats.bb',
-                        stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats2.xml'}
+                        bwgURI: '//www.biodalliance.org/datasets/GRCh38/repeats.bb',
+                        stylesheet_uri: '//www.biodalliance.org/stylesheets/bb-repeats2.xml'}
 ],
 
     prefix: '{{site.uiprefix}}/',
     fullScreen: true,
-
-    browserLinks: {
-      Ensembl: 'http://www.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
-      UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=chr${chr}:${start}-${end}',
-      Sequence: 'http://www.derkholm.net:8080/das/hg19comp/sequence?segment=${chr}:${start},${end}'
-    },
 
     hubs: ['http://ngs.sanger.ac.uk/production/ensembl/regulation/hub.txt', {url: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/hub.txt', genome: 'hg19', mapping: 'hg19ToHg38'}],
   });

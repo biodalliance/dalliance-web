@@ -3,7 +3,7 @@ layout: page
 title: Release notes
 ---
 
-Version 0.13 (XX Feb 2014)
+Version 0.13 (3 Feb 2014)
 -------------
 
  * BAM rendering improvements (thanks to Yifei Men)

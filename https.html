@@ -1,0 +1,83 @@
+---
+layout: page
+title: HTTPS support
+---
+<div style='margin-left: 25px; margin-right: 25px; background-color: rgb(220,240,255); padding: 10px'>
+<h2>I've seen an "HTTP Warning" message in Biodalliance</h2>
+
+<p>
+Brief version: your web browser doesn't allow web applications loaded over HTTPS
+to access resources over HTTP.
+</p>
+
+<p>
+Longer version: a number of major browser vendors have decided to impose strong
+restrictions on "mixed content": situations where a web page or application loads
+some resources over HTTPS and some over HTTP.  There are some good reasons for
+this, for instance simplifying the semantics of the HTTPS "lock" icons which browser
+display.  The long term intention is clearly to encourage wider (and eventually universal)
+adoption of HTTPS.  However, there are some troublesome edge cases, in particular
+for web-based data integration tools like Biodalliance.  Since Biodalliance 0.13.4,
+we make a best-effort attempt to detect problems caused by mixed-content restrictions
+and show the "HTTP Warning" error.
+</p>
+
+<p>
+If you've seen the "HTTP Warning" error, you have three options:
+</p>
+
+<ol>
+<li>Try to access the same data over HTTPS instead of HTTP.  Some web servers
+support both protocols, so it's worth trying just changing "http:" to "https:" in
+a URL.  If not, you could ask the data provider whether they would consider 
+supporting HTTPS.</li>
+<li>Tell your browser to allow mixed content.  There is probably a button in the
+URL bar to enable this, although it may be quite subtle (e.g. the "shield" icon
+in recent versions of Chrome, shown below):</li>
+<img src="ss/chrome-mixed.png">
+<li>Access Biodalliance itself over <a href="http://www.biodalliance.org/">HTTP</a>
+rather than HTTPS.  We'd prefer that you didn't do this, but recognize that right
+this option might be the least hassle...</li>
+</ol>
+</div>
+
+<h2>HTTPS support status</h2>
+
+<p>
+Biodalliance supports HTTPS, both for fetching data and for hosting
+the Biodalliance application itself.  All public data and code served
+from www.biodalliance.org is available over both HTTP and HTTPS.  We
+would encourage you to use HTTPS wherever possible.
+</p>
+
+<p>
+That said, there can be some some issues when HTTP and HTTPS meet.
+Some major browsers now default to preventing pages loaded over HTTPS
+from accessing <strong>any</strong> HTTP resources, and this will lead
+to errors if an HTTPS-based Biodalliance instance tries to fetch some
+data over plain HTTP.
+</p>
+
+<h2>Protocol-relative URLs</h2>
+
+<p>Biodalliance has full support for protocol-relative URLs, <i>i.e.</i> URLs
+like:
+
+<pre>
+     //www.biodalliance.org/datasets/ensgene.bb
+</pre>
+
+these have a "hostname" part but no protocol part.  They imply that the
+server is offering the same resources via both HTTP and HTTPS, and HTTPS
+will be used when accessing the resource from an HTTPS page.
+</p>
+
+<h2>For data providers</h2>
+
+<p>
+Please, please, offer your data over HTTPS if at all possible.  Browser developers
+and others are increasingly pushing HTTPS and it seems likely that unencrypted
+HTTP <a href="https://groups.google.com/forum/#!topic/mozilla.dev.platform/xaGffxAM-hs%5B1-25%5D">may
+eventually be deprecated</a>.  Setting up HTTPS in web servers is now relatively
+easy, and there are some options for obtaining SSL certificates for free.
+</p>

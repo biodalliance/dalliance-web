@@ -37,14 +37,17 @@
         },
 
         chains: {
-          hg18ToHg19: new Chainset('http://www.derkholm.net:8080/das/hg18ToHg19/', 'NCBI36', 'GRCh37',
-                                   {
-                                      speciesName: 'Human',
-                                      taxon: 9606,
-                                      auth: 'NCBI',
-                                      version: 36,
-                                      ucscName: 'hg18'
-                                   })
+          hg18ToHg19: {
+            uri: '//www.biodalliance.org/datasets/hg18ToHg19.bb',
+            type: 'bigbed',
+            coords: {
+              speciesName: 'Human',
+              taxon: 9606,
+              auth: 'NBCI',
+              version: 36,
+              ucscName: 'hg17'
+            }
+          }
         },
 
         sources:     [{name:                 'Genome',

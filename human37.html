@@ -17,36 +17,39 @@ layout: genome
       ucscName: 'hg19'
     },
 
-    chains: {
-      hg18ToHg19: new Chainset('http://www.derkholm.net:8080/das/hg18ToHg19/', 'NCBI36', 'GRCh37',
-                               {
-                                  speciesName: 'Human',
-                                  taxon: 9606,
-                                  auth: 'NCBI',
-                                  version: 36,
-                                  ucscName: 'hg18'
-                               })
-    },
+        chains: {
+          hg18ToHg19: {
+            uri: '//www.biodalliance.org/datasets/hg18ToHg19.bb',
+            type: 'bigbed',
+            coords: {
+              speciesName: 'Human',
+              taxon: 9606,
+              auth: 'NBCI',
+              version: 36,
+              ucscName: 'hg17'
+            }
+          }
+        },
 
     sources:          [{name:                 'Genome',
-                       twoBitURI:            'http://www.biodalliance.org/datasets/hg19.2bit',
+                       twoBitURI:            '//www.biodalliance.org/datasets/hg19.2bit',
                        tier_type: 'sequence'},
                       {name: 'Genes',
                        desc: 'Gene structures from GENCODE 19',
-                       bwgURI: 'http://www.biodalliance.org/datasets/gencode.bb',
-                       stylesheet_uri: 'http://www.biodalliance.org/stylesheets/gencode.xml',
+                       bwgURI: '//www.biodalliance.org/datasets/gencode.bb',
+                       stylesheet_uri: '//www.biodalliance.org/stylesheets/gencode.xml',
                        collapseSuperGroups: true,
-                       trixURI: 'http://www.biodalliance.org/datasets/geneIndex.ix'},
+                       trixURI: '//www.biodalliance.org/datasets/geneIndex.ix'},
                       {name: 'Repeats',
                         desc: 'Repeat annotation from Ensembl 59', 
-                        bwgURI: 'http://www.biodalliance.org/datasets/repeats.bb',
-                        stylesheet_uri: 'http://www.biodalliance.org/stylesheets/bb-repeats.xml'}
+                        bwgURI: '//www.biodalliance.org/datasets/repeats.bb',
+                        stylesheet_uri: '//www.biodalliance.org/stylesheets/bb-repeats.xml'}
                       ,{name: 'Conservation',
                         desc: 'Conservation', 
-                        bwgURI: 'http://www.biodalliance.org/datasets/phastCons46way.bw',
+                        bwgURI: '//www.biodalliance.org/datasets/phastCons46way.bw',
                         noDownsample: true}
                     ,{name: 'GM12878 ChromHMM', desc: 'GM12878 ChromHMM Genome Segmentation', 
-                       pennant: 'http://genome.ucsc.edu/images/encodeThumbnail.jpg',
+                       pennant: '//genome.ucsc.edu/images/encodeThumbnail.jpg',
                        bwgURI: 'http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/segmentations/jan2011/hub/gm12878.ChromHMM.bb',
                        style: [{type: 'bigbed', style: {glyph: 'BOX', FGCOLOR: 'black', BGCOLOR: 'blue', HEIGHT: 8, BUMP: false, LABEL: false, ZINDEX: 20, BGITEM: true, id: 'style1'}}, 
                               {type: 'bb-translation', style: {glyph: 'BOX', FGCOLOR: 'black', BGITEM: true, BGCOLOR: 'red', HEIGHT: 10, BUMP: true, ZINDEX: 20, id: 'style2'}}, 

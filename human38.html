@@ -18,15 +18,17 @@ layout: genome
     },
 
     chains: {
-
-      hg19ToHg38: new Chainset('http://www.derkholm.net:8080/das/hg19ToHg38/', 'GRCh37', 'GRCh38',
-                               {
-                                  speciesName: 'Human',
-                                  taxon: 9606,
-                                  auth: 'GRCh',
-                                  version: 37,
-                                  ucscName: 'hg19'
-                               })
+      hg19ToHg38: {
+        uri: '//www.biodalliance.org/datasets/hg19ToHg38.bb',
+        type: 'bigbed',
+        coords: {
+          speciesName: 'Human',
+          taxon: 9606,
+          auth: 'GRCh',
+          version: 37,
+          ucscName: 'hg19'
+        }
+      }
     },
 
     sources:          [{name:                 'Genome',

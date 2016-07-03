@@ -11,43 +11,36 @@ almost any web page, e.g.:
 <script language="javascript">
   new Browser({
     chr:          '22',
-    viewStart:    30000000,
-    viewEnd:      30030000,
-    cookieKey:    'human',
+    viewStart:    30700000,
+    viewEnd:      30900000,
 
     coordSystem: {
       speciesName: 'Human',
       taxon: 9606,
-      auth: 'NCBI',
-      version: '36',
-      ucscName: 'hg18'
+      auth: 'GRCh',
+      version: '37',
+      ucscName: 'hg19'
     },
 
-    sources:     [{name:                 'Genome',      
-                   uri:                  'http://www.derkholm.net:8080/das/hg18comp/',        
-                   tier_type:            'sequence',
-                   provides_entrypoints: true},
-                  {name:                 'Genes',     
-                   desc:                 'Gene structures from Ensembl 54',
-                   uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
+    sources:     [{name:                 'Genome',
+                   twoBitURI:            '//www.biodalliance.org/datasets/hg19.2bit',
+                   tier_type:            'sequence'},
+                  {name:                 'Genes',
+                   desc:                 'Gene structures from GENCODE 19',
+                   bwgURI:               '//www.biodalliance.org/datasets/gencode.bb',
+                   stylesheet_uri:       '//www.biodalliance.org/stylesheets/gencode.xml',
                    collapseSuperGroups:  true,
-                   provides_karyotype:   true,
-                   provides_search:      true},
-                  {name:                 'Repeats',     
-                   uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
-                   stylesheet_uri:       'http://www.derkholm.net/dalliance-test/stylesheets/ens-repeats.xml'},
-                  {name:                 'MeDIP raw',
-                   uri:                  'http://www.derkholm.net:8080/das/medipseq_reads'},
-                  {name:                 'MeDIP-seq',
-                   uri:                  'http://www.ebi.ac.uk/das-srv/genomicdas/das/batman_seq_SP/'}],
+                   trixURI:              '//www.biodalliance.org/datasets/geneIndex.ix'},
+                  {name:                 'Repeats',
+                   desc:                 'Repeat annotation from Ensembl',
+                   bwgURI:               '//www.biodalliance.org/datasets/repeats.bb',
+                   stylesheet_uri:       '//www.biodalliance.org/stylesheets/bb-repeats.xml'},
+                  {name:                 'Conservation',
+                   desc:                 'Conservation', 
+                   bwgURI:               '//www.biodalliance.org/datasets/phastCons46way.bw',
+                   noDownsample:         true}],
 
-    searchEndpoint: new DASSource('http://www.derkholm.net:8080/das/hsa_54_36p/'),
-    browserLinks: {
-        Ensembl: 'http://ncbi36.ensembl.org/Homo_sapiens/Location/View?r=${chr}:${start}-${end}',
-        UCSC: 'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg18&position=chr${chr}:${start}-${end}',
-    },
-
-    uiPrefix: '{{site.uiprefix}}/',
+    prefix: '{{site.uiprefix}}/',
 
     cookieKey: 'human-embed-demo',
     disablePoweredBy: true,
@@ -62,39 +55,39 @@ Typical embedding code looks something like:
 </p>
 
 {% highlight html %}
-<script language="javascript" src="http://www.biodalliance.org/release-0.11/dalliance-compiled.js"></script>
+<script language="javascript" src="{{site.uiprefix}}/dalliance-compiled.js"></script>
 <script language="javascript">
   new Browser({
     chr:          '22',
-    viewStart:    30000000,
-    viewEnd:      30030000,
-    cookieKey:    'human',
+    viewStart:    30700000,
+    viewEnd:      30900000,
 
     coordSystem: {
       speciesName: 'Human',
       taxon: 9606,
-      auth: 'NCBI',
-      version: '36',
-      ucscName: 'hg18'
+      auth: 'GRCh',
+      version: '37',
+      ucscName: 'hg19'
     },
 
-    sources:     [{name:                 'Genome',      
-                   uri:                  'http://www.derkholm.net:8080/das/hg18comp/',        
-                   tier_type:            'sequence',
-                   provides_entrypoints: true},
-                  {name:                 'Genes',     
-                   desc:                 'Gene structures from Ensembl 54',
-                   uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
+    sources:     [{name:                 'Genome',
+                   twoBitURI:            '//www.biodalliance.org/datasets/hg19.2bit',
+                   tier_type:            'sequence'},
+                  {name:                 'Genes',
+                   desc:                 'Gene structures from GENCODE 19',
+                   bwgURI:               '//www.biodalliance.org/datasets/gencode.bb',
+                   stylesheet_uri:       '//www.biodalliance.org/stylesheets/gencode.xml',
                    collapseSuperGroups:  true,
-                   provides_karyotype:   true,
-                   provides_search:      true},
-                  {name:                 'Repeats',     
-                   uri:                  'http://www.derkholm.net:8080/das/hsa_54_36p/',      
-                   stylesheet_uri:       'http://www.derkholm.net/dalliance-test/stylesheets/ens-repeats.xml'},
-                  {name:                 'MeDIP raw',
-                   uri:                  'http://www.derkholm.net:8080/das/medipseq_reads'},
-                  {name:                 'MeDIP-seq',
-                   uri:                  'http://www.ebi.ac.uk/das-srv/genomicdas/das/batman_seq_SP/'}]
+                   trixURI:              '//www.biodalliance.org/datasets/geneIndex.ix'},
+                  {name:                 'Repeats',
+                   desc:                 'Repeat annotation from Ensembl',
+                   bwgURI:               '//www.biodalliance.org/datasets/repeats.bb',
+                   stylesheet_uri:       '//www.biodalliance.org/stylesheets/bb-repeats.xml'},
+                  {name:                 'Conservation',
+                   desc:                 'Conservation', 
+                   bwgURI:               '//www.biodalliance.org/datasets/phastCons46way.bw',
+                   noDownsample:         true}],
+
   });
 </script>
 
